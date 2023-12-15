@@ -4,7 +4,9 @@
  */
 package servlets;
 
+import com.google.gson.JsonObject;
 import database.tables.EditPetKeepersTable;
+import database.tables.EditPetOwnersTable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,8 +25,7 @@ import mainClasses.PetKeeper;
  *
  * @author porok
  */
-public class Login extends HttpServlet {
-
+public class RegisterKeeper extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +39,18 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet RegisterKeeper</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet RegisterKeeper at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,19 +65,22 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("This is the GET!\n");
-        PrintWriter out = response.getWriter();
+        JSON_Converter jsc = new JSON_Converter();
 
         HttpSession session = request.getSession();
-        if (session.getAttribute("loggedIn") != null) {
-
-            out.println("userLoggedIn.html");
+        EditPetKeepersTable pkt = new EditPetKeepersTable();
+        try {
+            PetKeeper p = pkt.databaseToPetKeepersOnlyName(session.getAttribute("loggedIn").toString());
+            System.out.println("Address is :" + p.getAddress());
+            String json = jsc.JavaObjectToJSONRemoveElements(p, "password");
             response.setStatus(200);
-
-        } else {
-            response.setStatus(403);
+            response.getWriter().write(json);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterKeeper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterKeeper.class.getName()).log(Level.SEVERE, null, ex);
         }
-        out.flush();
+
     }
 
     /**
@@ -79,43 +94,41 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-
-        HttpSession session = request.getSession(true);
-        EditPetKeepersTable epkt = new EditPetKeepersTable();
+        EditPetOwnersTable pot = new EditPetOwnersTable();
+        EditPetKeepersTable pkt = new EditPetKeepersTable();
         BufferedReader inputJSONfromClient = request.getReader();
-        //okoko
 
         //Convert to string
         JSON_Converter jsc = new JSON_Converter();
         String finalInput = jsc.getJSONFromAjax(inputJSONfromClient);
-        System.out.println(finalInput);
-        response.setCharacterEncoding("UTF-8");
-        PetKeeper pk = epkt.jsonToPetKeeper(finalInput);
+
+        //dummy
+        PetKeeper p = pkt.jsonToPetKeeper(finalInput);
+        //
+
         try {
-            PetKeeper petkeeper = epkt.databaseToPetKeepers(pk.getUsername(), pk.getPassword());
-            if (petkeeper != null) {
-                session.setAttribute("loggedIn", pk.getUsername());
-                PrintWriter out = response.getWriter();
-
-                out.println("userLoggedIn.html");
-
-
-                response.setStatus(200);
-                System.out.println("Inside true if!\n");
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            if ((pot.checkIfPetOwnerRegistered(p.getUsername(), p.getEmail()) != null) || (pkt.checkIfPetKeeperRegistered(p.getUsername(), p.getEmail()) != null)) {
+                response.setStatus(409);
+                JsonObject jo = new JsonObject();
+                jo.addProperty("error", " Username Already Taken_1");
+                out.write(jo.toString());
             } else {
-                response.setStatus(401);
-                System.out.println("Inside false if!\n");
-
+                pkt.addPetKeeperFromJSON(finalInput);
+                response.setStatus(200);
+                out.write(finalInput);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("User already registered");
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
 
     /**
      * Returns a short description of the servlet.

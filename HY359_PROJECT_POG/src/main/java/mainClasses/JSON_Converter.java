@@ -5,10 +5,10 @@
  */
 package mainClasses;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import java.io.BufferedReader;
 import java.io.IOException;
-
-import com.google.gson.Gson;
 
 /**
  *
@@ -23,32 +23,30 @@ public class JSON_Converter {
 		buffer.append(line);
 	}
 	String data = buffer.toString();
-	return data;
-}
-    public String PetOwnerToJSON(PetOwner per) {
-        Gson gson = new Gson();
+        return data;
 
-        String json = gson.toJson(per, PetOwner.class);
-        return json;
     }
-    
-    public String PetKeeperToJSON(PetKeeper per) {
-        Gson gson = new Gson();
 
-        String json = gson.toJson(per, PetKeeper.class);
-        return json;
-    }
-    
-    public PetKeeper jsonToPetKeeper(BufferedReader json) {
+    public String JavaObjectToJSONRemoveElements(PetKeeper p, String removeProp) {
+        // Creating a Gson Object
         Gson gson = new Gson();
-        PetKeeper msg = gson.fromJson(json, PetKeeper.class);
-        return msg;
+        String json = gson.toJson(p, PetKeeper.class);
+        JsonObject object = (JsonObject) gson.toJsonTree(p);
+        object.remove(removeProp);
+        return object.toString();
     }
-    
+
     public PetOwner jsonToPetOwner(BufferedReader json) {
         Gson gson = new Gson();
         PetOwner msg = gson.fromJson(json, PetOwner.class);
         return msg;
+    }
+
+    public String petOwnerToJSON(PetOwner per) {
+        Gson gson = new Gson();
+
+        String json = gson.toJson(per, PetOwner.class);
+        return json;
     }
 
 

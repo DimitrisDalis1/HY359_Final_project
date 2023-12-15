@@ -19,18 +19,9 @@ public class PetKeeper {
     String personalpage;
     String property,propertydescription;
     String catkeeper,dogkeeper;
-    String type;
     int catprice, dogprice;
 
-    public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getProperty() {
+    public String getProperty() {
         return property;
     }
 

@@ -5,7 +5,6 @@
  */
 package database.tables;
 
-import mainClasses.PetOwner;
 import com.google.gson.Gson;
 import mainClasses.PetOwner;
 import database.DB_Connection;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mainClasses.Booking;
 
 /**
  *
@@ -71,44 +69,26 @@ public class EditPetOwnersTable {
         }
         return null;
     }
-    
-    public PetOwner databaseToPetOwnersWithUsernameEmail(String username, String email) throws SQLException, ClassNotFoundException{
-        Connection con = DB_Connection.getConnection();
-       Statement stmt = con.createStatement();
 
-       ResultSet rs;
-       try {
-           rs = stmt.executeQuery("SELECT * FROM petowners WHERE username = '" + username + "' OR email ='"+email+"'");
-           rs.next();
-           String json=DB_Connection.getResultsToJSON(rs);
-           Gson gson = new Gson();
-           PetOwner user = gson.fromJson(json, PetOwner.class);
-           return user;
-       } catch (Exception e) {
-           System.err.println("Got an exception! ");
-           System.err.println(e.getMessage());
-       }
-       return null;
-   }
-    
-    public PetOwner databaseToPetOwnersWithUsernameOnly(String username) throws SQLException, ClassNotFoundException{
+    public PetOwner checkIfPetOwnerRegistered(String username, String email) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
-       Statement stmt = con.createStatement();
+        Statement stmt = con.createStatement();
 
-       ResultSet rs;
-       try {
-           rs = stmt.executeQuery("SELECT * FROM petowners WHERE username = '" + username + "'");
-           rs.next();
-           String json=DB_Connection.getResultsToJSON(rs);
-           Gson gson = new Gson();
-           PetOwner user = gson.fromJson(json, PetOwner.class);
-           return user;
-       } catch (Exception e) {
-           System.err.println("Got an exception! ");
-           System.err.println(e.getMessage());
-       }
-       return null;
-   }
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM petowners WHERE username = '" + username + "' OR email='" + email + "'");
+            rs.next();
+            String json = DB_Connection.getResultsToJSON(rs);
+            Gson gson = new Gson();
+            PetOwner user = gson.fromJson(json, PetOwner.class);
+            return user;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+
+    }
     
     public String databasePetOwnerToJSON(String username, String password) throws SQLException, ClassNotFoundException{
          Connection con = DB_Connection.getConnection();
@@ -184,8 +164,8 @@ public class EditPetOwnersTable {
                     + "'" + user.getPersonalpage() + "',"
                     + "'" + user.getJob() + "',"
                     + "'" + user.getTelephone() + "',"
-                    + "'" + user.getLat() + "',"
-                    + "'" + user.getLon() + "'"
+                    + "'" + "12.1232121" + "',"
+                    + "'" + "32.123212" + "'"
                     + ")";
             //stmt.execute(table);
             System.out.println(insertQuery);

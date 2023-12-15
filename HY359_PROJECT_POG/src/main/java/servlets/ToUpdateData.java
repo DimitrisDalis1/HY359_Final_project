@@ -4,19 +4,26 @@
  */
 package servlets;
 
+import database.tables.EditPetKeepersTable;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mainClasses.JSON_Converter;
+import mainClasses.PetKeeper;
 
 /**
  *
  * @author porok
  */
-public class Logout extends HttpServlet {
+public class ToUpdateData extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +42,10 @@ public class Logout extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Logout</title>");
+            out.println("<title>Servlet ToUpdateData</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Logout at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ToUpdateData at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,7 +63,21 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        JSON_Converter jsc = new JSON_Converter();
+        HttpSession session = request.getSession();
+        EditPetKeepersTable pkt = new EditPetKeepersTable();
+        try {
+            PetKeeper p = pkt.databaseToPetKeepersOnlyName(session.getAttribute("loggedIn").toString());
+            //pkt.updatePetKeeper(p.getUsername(), "New standard value");
+            String json = jsc.JavaObjectToJSONRemoveElements(p, "password");
+            response.setStatus(200);
+            response.getWriter().write(json);
+        } catch (SQLException ex) {
+            Logger.getLogger(RegisterKeeper.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(RegisterKeeper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     /**
@@ -71,11 +92,31 @@ public class Logout extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("loggedIn") != null) {
-            session.invalidate();
-            response.setStatus(200);
-        } else {
-            response.setStatus(403);
+        //System.out.println("Name is : " + session.getAttribute("loggedIn").toString());
+        String name = session.getAttribute("loggedIn").toString();
+        EditPetKeepersTable pkt = new EditPetKeepersTable();
+        BufferedReader inputJSONfromClient = request.getReader();
+
+        //Convert to string
+        JSON_Converter jsc = new JSON_Converter();
+        String finalInput = jsc.getJSONFromAjax(inputJSONfromClient);
+
+        //dummy
+        PetKeeper p = pkt.jsonToPetKeeper(finalInput);
+        try {
+            PrintWriter out = response.getWriter();
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            pkt.updatePetKeeper(name, p.getPersonalpage(), p.getGender(), p.getBirthdate(), p.getFirstname(), p.getLastname(), p.getJob(), p.getTelephone(), p.getProperty(), p.getCatkeeper(), p.getDogkeeper(), p.getCatprice(), p.getDogprice(), p.getPropertydescription());
+
+
+        } catch (ClassNotFoundException ex) {
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write("User already registered");
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
