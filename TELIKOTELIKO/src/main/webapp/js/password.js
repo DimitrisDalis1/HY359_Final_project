@@ -4,7 +4,6 @@ const passwordMismatchMessage = document.getElementById('passwordMismatchMessage
 const showPasswordButton = document.getElementById('showPasswordButton');
 const passwordStrengthMessage = document.getElementById("passwordStrengthMessage");
 const submitButton = document.getElementById("submitButton");
-console.log(passwordInput);
 passwordInput.addEventListener('input', () => {
     passwordMismatchMessage.innerHTML = '';
 });

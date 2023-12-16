@@ -136,6 +136,7 @@ function isLoggedIn() {
 
 $(document).ready(function ()
 {
+
 	isLoggedIn();
 });
 
@@ -156,5 +157,32 @@ function logout(){
 	xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 	xhr.send();
 }
+
+function showPetKeeperForm(){
+    $("#outerContent").load("PetKeeper.html");
+}
+
+function showPetOwnerForm(){
+    $("#outerContent").load("PetOwner.html");
+}
+
+function showPetOwnerRegistrationForm(){
+    $("#outerContent").load("PetOwnerRegistrationForm.html", function (){
+           setTimeout(function() { initializeMap(); }, 3000);
+    });
+}
+
+function showPetKeeperRegistrationForm(){
+    $("#outerContent").load("PetKeeperRegistrationForm.html");
+}
+
+function showLoginForm(){
+    $("#outerContent").load("Login.html");
+}
+
+function showHomePage(){
+    $("#outerContent").load("index.html");
+}
+
 
 
