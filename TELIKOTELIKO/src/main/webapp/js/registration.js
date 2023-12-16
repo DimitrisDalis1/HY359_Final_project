@@ -1,32 +1,6 @@
 // registration.js
 
 function registerUser() {
-    /*var formData = {
-        username: document.getElementById('username').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('passwordInput').value,
-        confirmPassword: document.getElementById('confirmPassword').value,
-        name: document.getElementById('name').value,
-        surname: document.getElementById('surname').value,
-        dob: document.getElementById('dob').value,
-        gender: document.querySelector('input[name="gender"]:checked').value,
-        Type: document.getElementById('Type').value,
-        indoorAccommodation: document.getElementById('indoorAccommodation').checked,
-        outdoorAccommodation: document.getElementById('outdoorAccommodation').checked,
-        hostCat: document.getElementById('hostCat').checked,
-        hostDog: document.getElementById('hostDog').checked,
-        catPriceInput: document.getElementById('catPrice').value,
-        dogPriceInput: document.getElementById('dogPrice').value,
-        Description: document.getElementById('propertyDescription').value,
-        country: document.getElementById('country').value,
-        city: document.getElementById('city').value,
-        address: document.getElementById('address').value,
-        personalPage: document.getElementById('personalPage').value,
-        job: document.getElementById('job').value,
-        mobilePhone: document.getElementById('mobilePhone').value,
-        agreement: document.getElementById('agreement').checked,
-    };*/
-    
     let myForm = document.getElementById('myForm');
     let formData = new FormData(myForm);
     const data = {};
@@ -183,6 +157,5 @@ function showLoginForm(){
 function showHomePage(){
     $("#outerContent").load("index.html");
 }
-
 
 
