@@ -1,0 +1,98 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 20px;
+    color: #000;
+}
+
+header {
+    background-color: #111;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+figure {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+figcaption {
+    font-style: italic;
+    font-size: 0.8em;
+    color: #000000;
+}
+
+.copyright{
+    margin: 0;
+}
+
+h1{
+    display: flex;
+    justify-content: center;
+}
+
+.checkboxes{
+    display: none;
+}
+
+#dogPriceInput{
+    display: none;
+}
+
+#catPriceInput{
+    display: none;
+}
+
+#Description{
+    display: none;
+}
+
+#Map{
+    max-width: 560px;
+}
+
+#lon{
+	display:none;
+}
+
+#lat{
+	display:none;
+}
+
+.ajaxContent{
+	display:none;
+	color:red;
+}
+
+.login-container{
+	display:none;
+}
+
+.row{
+  display:flex;
+  padding: 10px;
+  margin-right:2%;
+  margin-left:2%;
+  width:100%;
+}
+
+.output-container{
+	width:50%;
+	background-color: #17a2b8;
+	color:white!important;
+	text-align:center;
+}
+
+
