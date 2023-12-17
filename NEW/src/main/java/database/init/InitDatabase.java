@@ -195,7 +195,7 @@ public class InitDatabase {
 
     public void updateRecords() throws ClassNotFoundException, SQLException {
         EditPetOwnersTable es = new EditPetOwnersTable();
-        es.updatePetOwner("mountanton", "http://users.ics.forth/mountant");
+        //es.updatePetOwner("mountanton", "http://users.ics.forth/mountant");
 
     }
 
