@@ -5,7 +5,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
 -->
 <html>
     <head>
-        <title>Register/Login</title>
+        <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -16,9 +16,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
             <h5>PawsStay - Heraklion Crete</h5>
         </div>
     </header>
-<!-- comment -->
-        <input type="button" id="login_pet_owner" onclick="return showPetOwnerLoginForm(); return false;" value="Login">
         <input type="button" id="go_home" onclick="return showHomePage(); return false;" value="Home Page">
-        
+
+        <h1>Pet Owner Login Form</h1>
+
+                <form id="loginForm" name="loginForm" onsubmit='petOwnerloginPOST();return false;'>
+                    <label for="username">username:</label><br>
+                    <input type="text"  id="username" name="username" required><br>
+                    <label for="password">password:</label><br>
+                    <input type="password"  name="password" id="password" required><br>
+                    <input type="submit" class="button" value="Login">
+                </form>
+        <div id="ajaxContent"></div>
     </body>
 </html>

@@ -17,20 +17,39 @@
         <servlet-class>servlets.registerUser</servlet-class>
     </servlet>
     <servlet>
-    	<description>
+        <description>
     	</description>
-    	<display-name>Login</display-name>
-    	<servlet-name>Login</servlet-name>
-    	<servlet-class>servlets.Login</servlet-class>
+        <display-name>Login</display-name>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>servlets.Login</servlet-class>
     </servlet>
     <servlet>
-    	<description>
+        <description>
     	</description>
-    	<display-name>Logout</display-name>
-    	<servlet-name>Logout</servlet-name>
-    	<servlet-class>servlets.Logout</servlet-class>
+        <display-name>Logout</display-name>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>servlets.Logout</servlet-class>
     </servlet>
-
+    <servlet>
+        <servlet-name>LoginPetOwner</servlet-name>
+        <servlet-class>servlets.LoginPetOwner</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginPetKeeper</servlet-name>
+        <servlet-class>servlets.LoginPetKeeper</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PetOwnerInformation</servlet-name>
+        <servlet-class>servlets.PetOwnerInformation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PetKeeperInformation</servlet-name>
+        <servlet-class>servlets.PetKeeperInformation</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePetOwnerData</servlet-name>
+        <servlet-class>servlets.UpdatePetOwnerData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -48,18 +67,36 @@
         <url-pattern>/registerUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-    	<servlet-name>Login</servlet-name>
-    	<url-pattern>/Login</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-    	<servlet-name>Logout</servlet-name>
-    	<url-pattern>/Logout</url-pattern>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>LoginPetOwner</servlet-name>
+        <url-pattern>/LoginPetOwner</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginPetKeeper</servlet-name>
+        <url-pattern>/LoginPetKeeper</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PetOwnerInformation</servlet-name>
+        <url-pattern>/PetOwnerInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PetKeeperInformation</servlet-name>
+        <url-pattern>/PetKeeperInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePetOwnerData</servlet-name>
+        <url-pattern>/UpdatePetOwnerData</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
 </web-app>
-

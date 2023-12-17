@@ -1,5 +1,20 @@
 // registration.js
 
+//Used for getting the data in table format
+function createTableFromJSON(data) {
+    var html = "<table><tr><th>Category</th><th>Value</th></tr>";
+    for (const x in data) {
+        var category = x;
+        var value = data[x];
+
+        html += "<tr><td>" + category + "</td><td>" + value + "</td></tr>";
+    }
+    html += "</table>";
+    return html;
+
+}
+
+//Used at the register user tab
 function registerUser() {
     let myForm = document.getElementById('myForm');
     let formData = new FormData(myForm);
@@ -69,13 +84,13 @@ function loginPOST() {
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             //setChoicesForLoggedUser();
-           $("#outputContent").html("Welcome again "+xhr.responseText);
+           $("#outerContent").load(xhr.responseText);
 		 	document.getElementById('login-container').style.display = "none";
 			document.getElementById('registerButton').style.display = "none";
 			document.getElementById('loginButton').style.display = "none";
 			document.getElementById('logoutButton').style.display = "inline";
         } else if (xhr.status !== 200) {
-              $("#outputContent").html("Wrong Credentials");
+              showLoginError();
             //('Request failed. Returned status of ' + xhr.status);
         }
     };
@@ -140,15 +155,20 @@ function showPetOwnerForm(){
     $("#outerContent").load("PetOwner.html");
 }
 
+//NEVER USED
 function showPetOwnerRegistrationForm(){
     $("#outerContent").load("PetOwnerRegistrationForm.html", function (){
            setTimeout(function() { initializeMap(); }, 3000);
     });
 }
 
+
 function showPetKeeperRegistrationForm(){
-    $("#outerContent").load("PetKeeperRegistrationForm.html");
+    $("#outerContent").load("PetKeeperRegistrationForm.html", function (){
+           setTimeout(function() { initializeMap(); }, 3000);
+    });
 }
+
 
 function showLoginForm(){
     $("#outerContent").load("Login.html");
@@ -158,4 +178,166 @@ function showHomePage(){
     $("#outerContent").load("index.html");
 }
 
+//If login fails
+function showLoginError(){
+    document.getElementById('ajaxContent').style.color = "red";
+
+    $('#ajaxContent').html("Wrong Credentials");
+    setTimeout(function() { $('#ajaxContent').hide(); }, 2000);
+
+    if($('#ajaxContent').is(":hidden")){
+        $('#ajaxContent').show();
+        setTimeout(function() { $('#ajaxContent').hide(); }, 2000);
+    }
+}
+
+function showPetOwnerLoginForm(){
+       $("#outerContent").load("LoginPetOwner.html"); 
+}
+
+function showPetKeeperLoginForm(){
+        $("#outerContent").load("LoginPetKeeper.html"); 
+
+}
+
+//Login ajax for petOwner --> Login Pet Owner
+function petOwnerloginPOST() {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //setChoicesForLoggedUser();
+           $("#outerContent").load(xhr.responseText);
+
+        } else if (xhr.status !== 200) {
+              showLoginError();
+            //('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+    var data = $('#loginForm').serialize();
+    xhr.open('POST', 'LoginPetOwner');
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    xhr.send(data);
+}
+
+//Login ajax for petKeeper --> Login Pet Keeper
+function petKeeperloginPOST(){
+       var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //setChoicesForLoggedUser();
+           $("#outerContent").load(xhr.responseText);
+
+        } else if (xhr.status !== 200) {
+              showLoginError();
+            //('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+    var data = $('#loginForm').serialize();
+    xhr.open('POST', 'LoginPetKeeper');
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    xhr.send(data); 
+}
+
+//Shows pet owners Info
+function showInfoPetOwner() {
+        var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseData = JSON.parse(xhr.responseText);
+            if($('#ajaxContent').is(':empty')){
+                $('#ajaxContent').html("<h1>Your Data</h1>");
+                $('#ajaxContent').append(createTableFromJSON(responseData));
+            }
+            
+            if($('#ajaxContent').is(":hidden")){
+                $('#ajaxContent').html("<h1>Your Data</h1>");
+                $('#ajaxContent').append(createTableFromJSON(responseData));
+                $('#ajaxContent').show();
+            }
+            else{
+                $('#ajaxContent').hide();
+
+            }
+            
+            
+            
+            // $("#myForm").hide();
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+
+    xhr.open('GET', 'PetOwnerInformation');
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send();
+
+}
+
+//Shows pet keepers info
+function showInfoPetKeeper(){
+    
+            var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseData = JSON.parse(xhr.responseText);
+
+            $('#ajaxContent').html("<h1>Your Data</h1>");
+            $('#ajaxContent').append(createTableFromJSON(responseData));
+            // $("#myForm").hide();
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+
+    xhr.open('GET', 'PetKeeperInformation');
+    xhr.setRequestHeader("Content-type", "application/json");
+    xhr.send();
+
+}
+
+//Loads the form to update the pet owner's data
+function showEditInfoPetOwner(){
+    $("#ajaxContent1").load("showEditInfoPetOwner.html"); 
+}
+
+//Updates the pet owner's data
+function updatePetOwnerData() {
+    let myForm = document.getElementById('ChangeForm');
+    let formData = new FormData(myForm);
+    
+    const data = {};
+    formData.forEach((value, key) => (data[key] = value));
+    var jsonData = JSON.stringify(data);
+    //console.log("Data is: ", jsonData);
+    
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //const responseData = JSON.parse(xhr.responseText);
+            $('#ajaxContent').html("Updated");
+            setTimeout(function() { $('#ajaxContent').hide(); }, 3000);
+            
+            if($('#ajaxContent').is(":hidden")){
+                $('#ajaxContent').show();
+                setTimeout(function() { $('#ajaxContent').hide(); }, 3000);
+            }
+            
+            //$('#ajaxContent2').html("<h1>Your Data</h1>");
+            //$('#ajaxContent2').append(createTableFromJSON(responseData));
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+            //('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+    //var data = $('#loginForm').serialize();
+    xhr.open('POST', 'UpdatePetOwnerData');
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    xhr.send(jsonData);
+    
+    
+}
+    
+
+//if login succeeds
 
