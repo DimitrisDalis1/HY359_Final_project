@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 /**
  *
@@ -49,6 +50,26 @@ public class JSONCONVERSION {
         Gson gson = new Gson();
         PetOwner msg = gson.fromJson(json, PetOwner.class);
         return msg;
+    }
+
+    public String JavaObjectToJSONRemoveElements(PetOwner p, String removeProp, String removeProp2) {
+        // Creating a Gson Object
+        Gson gson = new Gson();
+        String json = gson.toJson(p, PetOwner.class);
+        JsonObject object = (JsonObject) gson.toJsonTree(p);
+        object.remove(removeProp);
+        object.remove(removeProp2);
+        return object.toString();
+    }
+
+    public String JavaObjectToJSONRemoveElementsKeeper(PetKeeper p, String removeProp, String removeProp2) {
+        // Creating a Gson Object
+        Gson gson = new Gson();
+        String json = gson.toJson(p, PetKeeper.class);
+        JsonObject object = (JsonObject) gson.toJsonTree(p);
+        object.remove(removeProp);
+        object.remove(removeProp2);
+        return object.toString();
     }
 
 

@@ -80,7 +80,8 @@ public class Login extends HttpServlet {
 			if(tableO.databaseToPetOwners(username, password)==null && tableK.databaseToPetKeepers(username, password)==null) {
 				response.setStatus(403);
 				response.getWriter().write("There is no pet keeper or pet owner with that username and password");
-			}else {
+                        } else {
+
 				session.setAttribute("loggedIn",username);
 				response.setStatus(200);
 			}
