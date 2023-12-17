@@ -43,12 +43,44 @@ public class EditPetOwnersTable {
     
    
     
-    public void updatePetOwner(String username,String personalpage) throws SQLException, ClassNotFoundException{
+    public void updatePetOwner(String username, String personalpage, String gender, String birthdate, String firstname, String lastname, String job, String telephone) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        String update="UPDATE petowners SET personalpage='"+personalpage+"' WHERE username = '"+username+"'";
-        stmt.executeUpdate(update);
+        String update;
+        if (!personalpage.equals("")) {
+            update = "UPDATE petowners SET personalpage='" + personalpage + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!birthdate.equals("")) {
+            update = "UPDATE petowners SET birthdate='" + birthdate + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (gender != null) {
+            update = "UPDATE petowners SET gender='" + gender + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!firstname.equals("")) {
+            update = "UPDATE petowners SET firstname='" + firstname + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!lastname.equals("")) {
+            update = "UPDATE petowners SET lastname='" + lastname + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!job.equals("")) {
+            update = "UPDATE petowners SET job='" + job + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!telephone.equals("")) {
+            update = "UPDATE petowners SET telephone='" + telephone + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+
     }
+
    
     
     public PetOwner databaseToPetOwners(String username, String password) throws SQLException, ClassNotFoundException{
@@ -197,6 +229,26 @@ public class EditPetOwnersTable {
             Logger.getLogger(EditPetOwnersTable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public PetOwner databaseToPetOwnersOnlyName(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT * FROM petowners WHERE username = '" + username + "'");
+            rs.next();
+            String json = DB_Connection.getResultsToJSON(rs);
+            Gson gson = new Gson();
+            PetOwner user = gson.fromJson(json, PetOwner.class);
+            return user;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
+
 
    
 
