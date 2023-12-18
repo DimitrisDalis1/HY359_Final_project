@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import database.tables.EditPetKeepersTable1;
 import database.tables.EditPetOwnersTable;
+import java.io.PrintWriter;
 import mainClasses.PetKeeper;
 import mainClasses.PetOwner;
 
@@ -42,11 +43,17 @@ public class Login extends HttpServlet {
 	           response.setStatus(200);
 	           String username = session.getAttribute("loggedIn").toString();
 	           
-			try {
+                    try {
+                        PrintWriter out = response.getWriter();
+
 				p = tableK.databaseToPetKeepersUsernameOnly(username);
 				if(p==null) {
-					o = tableO.databaseToPetOwnersWithUsernameOnly(username);
-				}
+                                    o = tableO.databaseToPetOwnersWithUsernameOnly(username);
+                                    out.println("PetOwnerGeneralInformation.html");
+                                } else {
+                                    out.println("PetKeeperGeneralInformation.html");
+
+                        }
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -55,9 +62,9 @@ public class Login extends HttpServlet {
 				e.printStackTrace();
 			}
 				if(p == null) {
-					 response.getWriter().write(o.getUsername());
+                                    //response.getWriter().write(o.getUsername());
 				}else {
-					 response.getWriter().write(p.getUsername());
+                                    //response.getWriter().write(p.getUsername());
 				}
 	          
 	        }

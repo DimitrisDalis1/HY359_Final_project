@@ -50,7 +50,63 @@ public class EditPetKeepersTable1 {
         String update="UPDATE petkeepers SET personalpage='"+personalpage+"' WHERE username = '"+username+"'";
         stmt.executeUpdate(update);
     }
-    
+
+    public void updatePetKeeperMine(String username, String personalpage, String gender, String birthdate, String firstname, String lastname, String job, String telephone, String property, String catkeeper, String dogkeeper, int catprice, int dogprice, String propertydescription) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        String update;
+        if (!personalpage.equals("")) {
+            update = "UPDATE petkeepers SET personalpage='" + personalpage + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!birthdate.equals("")) {
+            update = "UPDATE petkeepers SET birthdate='" + birthdate + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (gender != null) {
+            update = "UPDATE petkeepers SET gender='" + gender + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!firstname.equals("")) {
+            update = "UPDATE petkeepers SET firstname='" + firstname + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!lastname.equals("")) {
+            update = "UPDATE petkeepers SET lastname='" + lastname + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!job.equals("")) {
+            update = "UPDATE petkeepers SET job='" + job + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (!telephone.equals("")) {
+            update = "UPDATE petkeepers SET telephone='" + telephone + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (property != null) {
+            update = "UPDATE petkeepers SET property='" + property + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (catkeeper != null) {
+            update = "UPDATE petkeepers SET catkeeper='" + catkeeper + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        if (dogkeeper != null) {
+            update = "UPDATE petkeepers SET dogkeeper='" + dogkeeper + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+        update = "UPDATE petkeepers SET catprice='" + catprice + "' WHERE username = '" + username + "'";
+        stmt.executeUpdate(update);
+        update = "UPDATE petkeepers SET dogprice='" + dogprice + "' WHERE username = '" + username + "'";
+        stmt.executeUpdate(update);
+        if (propertydescription != null) {
+            update = "UPDATE petkeepers SET propertydescription='" + propertydescription + "' WHERE username = '" + username + "'";
+            stmt.executeUpdate(update);
+        }
+
+    }
     public void printPetKeeperDetails(String username, String password) throws SQLException, ClassNotFoundException{
          Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
