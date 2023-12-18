@@ -105,11 +105,16 @@ function isLoggedIn() {
 	xhr.onload = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
 			//setChoicesForLoggedUser();
-			$("#outputContent").html("Welcome again "+xhr.responseText);
-			document.getElementById('registerForm').style.display = "none";
-			document.getElementById('registerButton').style.display = "none";
-			document.getElementById('loginButton').style.display = "none";
-			document.getElementById('logoutButton').style.display = "inline";
+                        
+                        $("#outerContent").load(xhr.responseText, function (){
+                            $('#ajaxContent').append("Welcome BACK!!!");
+  
+                        });
+			//$("#outputContent").html("Welcome again "+xhr.responseText);
+			//document.getElementById('registerForm').style.display = "none";
+			//document.getElementById('registerButton').style.display = "none";
+			//document.getElementById('loginButton').style.display = "none";
+			//document.getElementById('logoutButton').style.display = "inline";
 			
 		} else if (xhr.status !== 200) {
 			$("#outputContent").html("Login or register to continue");
@@ -133,11 +138,18 @@ function logout(){
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function () {
 		if (xhr.readyState === 4 && xhr.status === 200) {
-			$("#outputContent").html("Successful Logout");
-			document.getElementById('registerButton').style.display = "inline";
-			document.getElementById('loginButton').style.display = "inline";
-			document.getElementById('logoutButton').style.display = "none";
-			document.getElementById('registerForm').style.display = "inline";
+			                        
+                        $("#outerContent").load("index.html", function (){
+                            $('#ajaxContent').append("Succesfull Logout!");
+                            
+                            setTimeout(function() { $('#ajaxContent').hide(); }, 2000);
+
+                            if($('#ajaxContent').is(":hidden")){
+                                $('#ajaxContent').show();
+                                setTimeout(function() { $('#ajaxContent').hide(); }, 2000);
+                            }
+                        });
+
 		} else if (xhr.status !== 200) {
 			alert('Request failed. Returned status of ' + xhr.status);
 		}
@@ -244,20 +256,9 @@ function showInfoPetOwner() {
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             const responseData = JSON.parse(xhr.responseText);
-            if($('#ajaxContent').is(':empty')){
                 $('#ajaxContent').html("<h1>Your Data</h1>");
                 $('#ajaxContent').append(createTableFromJSON(responseData));
-            }
             
-            if($('#ajaxContent').is(":hidden")){
-                $('#ajaxContent').html("<h1>Your Data</h1>");
-                $('#ajaxContent').append(createTableFromJSON(responseData));
-                $('#ajaxContent').show();
-            }
-            else{
-                $('#ajaxContent').hide();
-
-            }
             
             
             
@@ -281,9 +282,9 @@ function showInfoPetKeeper(){
         if (xhr.readyState === 4 && xhr.status === 200) {
             const responseData = JSON.parse(xhr.responseText);
 
-            $('#ajaxContent').html("<h1>Your Data</h1>");
-            $('#ajaxContent').append(createTableFromJSON(responseData));
-            // $("#myForm").hide();
+                $('#ajaxContent').html("<h1>Your Data</h1>");
+                $('#ajaxContent').append(createTableFromJSON(responseData));
+
         } else if (xhr.status !== 200) {
             alert('Request failed. Returned status of ' + xhr.status);
         }
@@ -297,7 +298,12 @@ function showInfoPetKeeper(){
 
 //Loads the form to update the pet owner's data
 function showEditInfoPetOwner(){
-    $("#ajaxContent1").load("showEditInfoPetOwner.html"); 
+    $("#ajaxContent").load("showEditInfoPetOwner.html"); 
+}
+
+function showEditInfoPetKeeper(){
+    $("#ajaxContent").load("showEditInfoPetKeeper.html"); 
+
 }
 
 //Updates the pet owner's data
@@ -332,6 +338,43 @@ function updatePetOwnerData() {
     };
     //var data = $('#loginForm').serialize();
     xhr.open('POST', 'UpdatePetOwnerData');
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    xhr.send(jsonData);
+    
+    
+}
+
+function updatePetKeeperData() {
+    let myForm = document.getElementById('ChangeForm');
+    let formData = new FormData(myForm);
+    
+    const data = {};
+    formData.forEach((value, key) => (data[key] = value));
+    var jsonData = JSON.stringify(data);
+    //console.log("Data is: ", jsonData);
+    
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            //const responseData = JSON.parse(xhr.responseText);
+            $('#ajaxContent').html("Updated");
+            setTimeout(function() { $('#ajaxContent').hide(); }, 3000);
+            
+            if($('#ajaxContent').is(":hidden")){
+                $('#ajaxContent').show();
+                setTimeout(function() { $('#ajaxContent').hide(); }, 3000);
+            }
+            
+            //$('#ajaxContent2').html("<h1>Your Data</h1>");
+            //$('#ajaxContent2').append(createTableFromJSON(responseData));
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+            //('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+    //var data = $('#loginForm').serialize();
+    xhr.open('POST', 'UpdatePetKeeperData');
     xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     xhr.send(jsonData);
     

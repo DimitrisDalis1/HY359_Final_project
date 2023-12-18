@@ -6,8 +6,7 @@
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="js/pet.js"></script>
-       
+
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,11 +15,13 @@
 </head>
 <body >
 
-<h3>Edit PET Owner Form</h3>
+<h3>Edit PET Keeper Form</h3>
 <div class="container mt-4 registerForm" id="registerForm">
-    
+                           <div id="ajaxContent" class="ajaxContent">
+                            
+                        </div>
         
-                <form onsubmit = "updatePetOwnerData();return false;" id = "ChangeForm" novalidate>
+                <form onsubmit = "updatePetKeeperData();return false;" id = "ChangeForm" novalidate>
                     <div class="row">
                         <div class="col-md-6">
 
@@ -64,12 +65,12 @@
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" class="form-check-input" id="female" name="gender" value="Female"
-                                        required>
+                                        >
                                     <label class="form-check-label" for = "female">Female</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input type="radio" class="form-check-input" id="other" name="gender" value="Other"
-                                        required>
+                                        >
                                     <label class="form-check-label" for="other">Other</label>
                                 </div>
                             </div>
@@ -86,6 +87,51 @@
                             <option value="UnitedKingdom">United Kingdom</option>
                             <option value="Other">OtherÂ·</option>
                         </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="type">User Type *</label>
+                        <select id="Type" name="type" class="form-control" >
+                            <option value="PetKeeper">Pet Keeper</option>
+                        </select>
+                    </div>
+                        <div class="form-group checkboxes">
+                        <label>Accommodation for Pets *</label>
+                        <div class="form-check">
+                            <input type="checkbox" id="indoorAccommodation" name="indoorAccommodation" value="Indoor"
+                                class="form-check-input">
+                            <label for="indoorAccommodation" class="form-check-label">Indoor Space</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="outdoorAccommodation" name="outdoorAccommodation" value="Outdoor"
+                                class="form-check-input">
+                            <label for="outdoorAccommodation" class="form-check-label">Outdoor Space</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group checkboxes">
+                        <label>Host Pets *</label>
+                        <div class="form-check checkboxCat">
+                            <input type="checkbox" id="catkeeper" name="catkeeper" value=true class="form-check-input">
+                            <label for="hostCat" class="form-check-label">Host a Cat</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" id="dogkeeper" name="dogkeeper" value=false class="form-check-input">
+                            <label for="hostDog" class="form-check-label">Host a Dog</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="catPriceInput">
+                        <label for="catPrice">Price for Cat Hosting (Ã¢ÂÂ¬ per night)</label>
+                        <input type="number" id="catprice" name="catprice" class="form-control" min="0" max="15" value="8">
+                    </div>
+                    <div class="form-group" id="dogPriceInput">
+                        <label for="dogPrice">Price for Dog Hosting (Ã¢ÂÂ¬ per night)</label>
+                        <input type="number" id="dogprice" name="dogprice" class="form-control" min="0" max="20" value="10">
+                    </div>
+
+                    <div class="form-group" id="Description">
+                        <label for="propertyDescription">Property Description</label>
+                        <textarea id="propertydescription" name="propertydescription" class="form-control" rows="4"></textarea>
                     </div>
 
 
@@ -124,6 +170,9 @@
                         </div>
                 </form>
             </div>
+
+
+  <script src="js/extrapet.js"></script>
 
 
 </body>

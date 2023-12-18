@@ -50,6 +50,10 @@
         <servlet-name>UpdatePetOwnerData</servlet-name>
         <servlet-class>servlets.UpdatePetOwnerData</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdatePetKeeperData</servlet-name>
+        <servlet-class>servlets.UpdatePetKeeperData</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -93,6 +97,10 @@
     <servlet-mapping>
         <servlet-name>UpdatePetOwnerData</servlet-name>
         <url-pattern>/UpdatePetOwnerData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePetKeeperData</servlet-name>
+        <url-pattern>/UpdatePetKeeperData</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
