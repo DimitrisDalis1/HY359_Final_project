@@ -380,7 +380,37 @@ function updatePetKeeperData() {
     
     
 }
+
+function show_chat_gpt_window(){
+    $("#ajaxContent").load("chat_gpt_window.html"); 
+
+}
+
+
+function call_chatGPT(){
+
+    //var input = document.getElementById("usergptinput").value;
     
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            $("#responseGPT").html(xhr.responseText);
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+            //('Request failed. Returned status of ' + xhr.status);
+        }
+    };
+    
+
+   
+    var data = $('#questiontogpt').serialize();
+
+    xhr.open('POST', 'chatGPTQuestions');
+    xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+    xhr.send(data);
+}
+    
+
 
 //if login succeeds
 
