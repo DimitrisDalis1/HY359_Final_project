@@ -1,112 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package servlets;
 
-import com.google.gson.JsonObject;
-import database.DB_Connection;
-import mainClasses.Message;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
+import database.tables.EditMessagesTable;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import mainClasses.Message;
 
 public class Chat extends HttpServlet {
-    private final DB_Connection dbConnection = new DB_Connection();
 
+    ArrayList<String> message = new ArrayList<String>();
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        String messageToSend = "";
         int lastMessageID = Integer.parseInt(request.getParameter("lastID"));
-
+        System.out.println(lastMessageID);
         try (PrintWriter out = response.getWriter()) {
-            // Send only the most recent message to the client
-            if (lastMessageID < messages.size()) {
-                out.println(messages.get(messages.size() - 1));
+            for (int i = lastMessageID; i < message.size(); i++) {
+                messageToSend += message.get(i);
             }
+            System.out.println(messageToSend);
+            out.print(messageToSend);
         }
     }
 
-    // Updated to use Message class
-    private final ArrayList<Message> messages = new ArrayList<>();
-
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        System.out.println(request.getParameter("message"));
+        String message = request.getParameter("message");
+
+        EditMessagesTable emt = new EditMessagesTable();
+        Message msg = emt.jsonToMessage(message);
+        try {
+            emt.createNewMessage(msg);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         try (PrintWriter out = response.getWriter()) {
-            String recipient = request.getParameter("recipientName");
-            System.out.println("onoma edw " + recipient);
-            // Get the current user's username from the session
-            String sender = getCurrentUsername(request);
-
-            String userMessage = request.getParameter("message");
-
-            if (checkRecipientExistence(recipient)) {
-                // Create a new Message object
-                Message newMessage = new Message();
-                newMessage.setSender(sender);
-                newMessage.setRecipient(recipient);
-                newMessage.setMessage(userMessage);
-                // Set timestamp and other fields as needed
-
-                // Add the message to the list
-                messages.add(newMessage);
-
-                // Print the message in the response
-                String messageHTML = "<p class='chat-message'>" + sender + " to " + recipient + ": " + userMessage + "</p>";
-                out.print(messageHTML);
-            } else {
-                // Print "PetKeeper Not Found" in a new line
-                out.print("<p class='error-message'>PetKeeper Not Found</p>");
-            }
+            /* TODO output your page here. You may use following sample code. */
+            String newMessage = "<p>" + request.getParameter("name") + ":" + request.getParameter("message") + "</p>";
+            //message.add(newMessage);
+            out.print(newMessage);
         }
     }
 
-    private String getCurrentUsername(HttpServletRequest request) {
-        String username = (String) request.getSession().getAttribute("loggedIn");
-
-        // Check if the username is not null or empty
-        if (username != null && !username.isEmpty()) {
-            return username;
-        } else {
-            String actualUsername = "Error";
-
-            return actualUsername;
-        }
-    }
-
-private boolean checkRecipientExistence(String recipient) {
-    boolean recipientExists = false;
-    System.out.println("this is the recpiwnt " + recipient);
-    try (Connection connection = dbConnection.getConnection()) {
-        String query = "SELECT * FROM PetKeepers WHERE username=?";
-        System.out.println("this is the query " + query);
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, recipient);
-            System.out.println("Executing query: " + preparedStatement.toString()); 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                recipientExists = resultSet.next();
-            }
-        }
-    } catch (SQLException | ClassNotFoundException e) {
-        e.printStackTrace();
-    }
-    System.out.println("Recipient exists for " + recipient + ": " + recipientExists);
-    return recipientExists;
-}
-
-
-
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }
