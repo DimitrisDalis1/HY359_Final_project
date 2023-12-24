@@ -414,6 +414,10 @@ function showPetOwnerMessages(){
     $("#ajaxContent").load("PetOwnerMessages.html"); 
 }
 
+function showPetKeeperMessages(){
+    $("#ajaxContent").load("PetKeeperMessages.html"); 
+}
+
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
@@ -447,66 +451,6 @@ function showPetOwnerMessages(){
 // chat.js
 
 // Function to fetch new messages using AJAX
-function getChatAJAX() {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            var ajaxContent = document.getElementById('ajaxContent');
-            if (xhr.responseText !== "") {
-                // Parse the JSON response to get the Message object
-                var newMessage = JSON.parse(xhr.responseText);
-
-                // Update the chat interface with the new message
-                var messageHTML = "<p class='chat-message'>" + newMessage.sender + " to " + newMessage.recipient + ": " + newMessage.message + "</p>";
-                ajaxContent.innerHTML += messageHTML;
-            }
-            // Continue fetching new messages after a short delay (e.g., 1000 milliseconds)
-            setTimeout(getChatAJAX, 1000);
-        } else if (xhr.status !== 200) {
-            alert('Request failed. Returned status of ' + xhr.status);
-        }
-    };
-
-    // Include the recipient and the last seen message ID in the request
-    var recipient = document.getElementById('recipientName').innerText;
-    var messages = document.getElementsByClassName("chat-message").length;
-    xhr.open('GET', 'Chat?recipient=' + recipient + '&lastID=' + messages);
-    xhr.send();
-}
 
 
-// Function to send a new message using AJAX
-function sendChatAJAX() {
-    event.preventDefault(); 
-
-    let myForm = document.getElementById('myForm');
-    let formData = new FormData(myForm);
-
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                document.getElementById('ajaxContent').innerHTML += xhr.responseText;
-            } else {
-                alert('Request failed. Returned status of ' + xhr.status);
-            }
-        }
-    };
-    
-    // Include the recipient in the request
-    //var recipient = document.getElementById('recipientName').innerText;
-    var valuep="";
-    var recipient = $('#myForm').serialize();
-    for (let [name, value] of formData) {
-        if(name == "recipientName"){
-            valuep = value;
-        }
-    }
-    console.log("to value mas " + valuep);
-    console.log("eimai edw " + recipient);
-
-    xhr.open('POST', 'Chat');
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(recipient);
-}
 
