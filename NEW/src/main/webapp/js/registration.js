@@ -409,8 +409,48 @@ function call_chatGPT(){
     xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
     xhr.send(data);
 }
-    
+
+function showPetOwnerMessages(){
+    $("#ajaxContent").load("PetOwnerMessages.html"); 
+}
+
+function showPetKeeperMessages(){
+    $("#ajaxContent").load("PetKeeperMessages.html"); 
+}
+
+/*function showPetOwnerMessages() {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseData = xhr.responseText;
+            document.getElementById('ajaxContent').innerHTML = responseData;
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+        }
+}; 
+
+    xhr.open('GET', 'PetOwnerMessages.html');
+    xhr.send();
+} */
+
+/* function showPetKeeperMessages() {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const responseData = xhr.responseText;
+            document.getElementById('ajaxContent').innerHTML = responseData;
+        } else if (xhr.status !== 200) {
+            alert('Request failed. Returned status of ' + xhr.status);
+        }
+};
+
+    xhr.open('GET', 'PetKeeperMessages.html');
+    xhr.send();
+} */
+
+// chat.js
+
+// Function to fetch new messages using AJAX
 
 
-//if login succeeds
 

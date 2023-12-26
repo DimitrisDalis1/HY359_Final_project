@@ -58,6 +58,10 @@
         <servlet-name>chatGPTQuestions</servlet-name>
         <servlet-class>servlets.chatGPTQuestions</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Chat</servlet-name>
+        <servlet-class>servlets.Chat</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -109,6 +113,10 @@
     <servlet-mapping>
         <servlet-name>chatGPTQuestions</servlet-name>
         <url-pattern>/chatGPTQuestions</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Chat</servlet-name>
+        <url-pattern>/Chat</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
