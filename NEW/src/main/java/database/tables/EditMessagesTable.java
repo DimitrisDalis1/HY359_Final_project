@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database.tables;
 
 import com.google.gson.Gson;
@@ -15,12 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mainClasses.Message;
-import mainClasses.Pet;
 
-/**
- *
- * @author mountant
- */
 public class EditMessagesTable {
 
     public void addMessageFromJSON(String json) throws ClassNotFoundException {
@@ -36,7 +26,6 @@ public class EditMessagesTable {
 
     public String reviewToJSON(Message msg) {
         Gson gson = new Gson();
-
         String json = gson.toJson(msg, Message.class);
         return json;
     }
@@ -44,7 +33,7 @@ public class EditMessagesTable {
     public ArrayList<Message> databaseToMessage(int booking_id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
-        ArrayList<Message> messages=new ArrayList<Message>();
+        ArrayList<Message> messages = new ArrayList<>();
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM messages WHERE booking_id= '" + booking_id + "'");
@@ -55,11 +44,9 @@ public class EditMessagesTable {
                 messages.add(msg);
             }
             return messages;
-            
-           
+
         } catch (Exception e) {
             System.err.println("Got an exception! ");
-
         }
         return null;
     }
@@ -72,14 +59,13 @@ public class EditMessagesTable {
                 + "booking_id INTEGER not NULL, "
                 + "message VARCHAR(500) not NULL, "
                 + "sender VARCHAR(500) not NULL, "
-                + "datetime DATETIME  not null,"
+                + "datetime DATETIME ,"
                 + "FOREIGN KEY (booking_id) REFERENCES bookings(booking_id), "
                 + "PRIMARY KEY ( message_id ))";
-        
+
         stmt.execute(sql);
         stmt.close();
         con.close();
-
     }
 
     /**
@@ -90,28 +76,24 @@ public class EditMessagesTable {
     public void createNewMessage(Message msg) throws ClassNotFoundException {
         try {
             Connection con = DB_Connection.getConnection();
-
             Statement stmt = con.createStatement();
 
             String insertQuery = "INSERT INTO "
                     + " messages (booking_id,message,sender,datetime) "
                     + " VALUES ("
-                    + "'" + msg.getBooking_id() + "',"
+                    + "'" + "1" + "',"
                     + "'" + msg.getMessage() + "',"
                     + "'" + msg.getSender() + "',"
                     + "'" + msg.getDatetime() + "'"
                     + ")";
-            //stmt.execute(table);
             System.out.println(insertQuery);
             stmt.executeUpdate(insertQuery);
             System.out.println("# The message was successfully added in the database.");
 
-            /* Get the member id from the database and set it to the member */
             stmt.close();
 
         } catch (SQLException ex) {
             Logger.getLogger(EditMessagesTable.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }

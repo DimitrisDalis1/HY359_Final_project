@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+
 public class DB_Connection {
     
     private static final String url = "jdbc:mysql://localhost";
@@ -23,9 +24,17 @@ public class DB_Connection {
      * @throws java.lang.ClassNotFoundException
      */
     public static Connection getConnection() throws SQLException, ClassNotFoundException {
+    try {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection(url + ":" + port + "/" + databaseName, username, password);
+        Connection connection = DriverManager.getConnection(url + ":" + port + "/" + databaseName, username, password);
+        System.out.println("Database connection established successfully");
+        return connection;
+    } catch (SQLException | ClassNotFoundException e) {
+        System.err.println("Error establishing database connection: " + e.getMessage());
+        throw e;
     }
+}
+
     
     public static Connection getInitialConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.jdbc.Driver");

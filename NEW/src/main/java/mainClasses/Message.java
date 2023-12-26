@@ -11,7 +11,7 @@ package mainClasses;
  */
 public class Message {
     int message_id, booking_id;
-    String message,datetime,sender;
+    String message,datetime,sender,recipient;
 
     public int getBooking_id() {
         return booking_id;
@@ -53,6 +53,13 @@ public class Message {
         this.datetime = datetime;
     }
 
+    public void getRecipient(String recipient) {
+        this.recipient = recipient;
+    }
     
+    public void setRecipient(String recipient) {
+        this.recipient = recipient;
+    }
+
     
 }
