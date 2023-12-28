@@ -12,8 +12,15 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
     <body>
 
             <form id="questiontogpt" name="questiontogpt" onsubmit='call_chatGPT();return false;'>
-            <label for="userinput">Write Question:</label><br>
-            <input type="text"  id="userinput" name="userinput" ><br>
+                
+            <div>
+                <label for="userinput">Questions *</label>
+                <select id="Type" name="userinput">
+                    <option value="What does a cat eat">What does a cat eat?</option>
+                    <option value="What does a dog eat">What does a dog eat?</option>
+                </select>
+            </div>
+                
             <input type="submit" class="button" value="Question">
             </form>
         
