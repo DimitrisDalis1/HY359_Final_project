@@ -6,6 +6,8 @@
 package servlets;
 
 import database.tables.EditMessagesTable;
+import database.tables.EditPetKeepersTable1;
+import database.tables.EditPetOwnersTable;
 import java.io.BufferedReader;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,14 +19,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 import mainClasses.JSONCONVERSION;
 import mainClasses.Message;
+import mainClasses.PetKeeper;
+import mainClasses.PetOwner;
 
 public class Chat extends HttpServlet {
 
     ArrayList<String> message = new ArrayList<String>();
     ArrayList<Message> newmes = new ArrayList<Message>();
-    int pol = 0;
+
 
 
 
@@ -55,7 +60,7 @@ public class Chat extends HttpServlet {
             throws ServletException, IOException {
         EditMessagesTable emt = new EditMessagesTable();
         try {
-            newmes = emt.databaseToMessage(2);
+            newmes = emt.databaseToMessage(1);
             //System.out.println(newmes.get(0).getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -67,13 +72,13 @@ public class Chat extends HttpServlet {
         int lastMessageID = Integer.parseInt(request.getParameter("lastID"));
         //System.out.println(lastMessageID);
         try (PrintWriter out = response.getWriter()) {
-            System.out.println("Last message id " + lastMessageID);
-            System.out.println("newsize " + message.size());
+            //System.out.println("Last message id " + lastMessageID);
+            //System.out.println("newsize " + message.size());
 
             for (int i = 0; i < newmes.size(); i++) {
                 messageToSend += "<p>" + newmes.get(i).getSender() + ":" + newmes.get(i).getMessage() + "</p>";
             }
-            System.out.println(messageToSend);
+            //System.out.println(messageToSend);
             out.print(messageToSend);
         }
 
@@ -91,15 +96,35 @@ public class Chat extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-
         Message msg = new Message();
+
+
+
         EditMessagesTable emt = new EditMessagesTable();
         JSONCONVERSION jc = new JSONCONVERSION();
         BufferedReader inputJSONfromClient = request.getReader();
         String finalInput = jc.getJSONFromAjax(inputJSONfromClient);
         System.out.println("Final input: " + finalInput);
         msg = emt.jsonToMessage(finalInput);
+
+        HttpSession session = request.getSession();
+        EditPetKeepersTable1 pkt = new EditPetKeepersTable1();
+        EditPetOwnersTable pot = new EditPetOwnersTable();
+        try {
+            PetOwner p = pot.databaseToPetOwnersOnlyName(session.getAttribute("loggedIn").toString());
+            if (p == null) {
+                PetKeeper pk = pkt.databaseToPetKeepersOnlyName(session.getAttribute("loggedIn").toString());
+                msg.setSender(pk.getUsername());
+            } else {
+                msg.setSender(p.getUsername());
+            }
+            System.out.println("Sender: " + msg.getSender());
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
 
         try {
