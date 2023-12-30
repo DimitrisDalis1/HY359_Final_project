@@ -193,12 +193,12 @@ public class EditPetKeepersTable1 {
             if("all".equals(type))     
             rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE  `petKeepers`.`keeper_id` not in (select keeper_id "
                  + "from `bookings` where `status`='requested' or  `status`='accepted')\n" +"");
-            else if ("catKeepers".equals(type))
+            /*else if ("catKeepers".equals(type))
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`catkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
                  + "from `bookings` where `status`='requested' or  `status`='accepted')");         
              else if ("dogKeepers".equals(type))
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`dogkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
-                 + "from `bookings` where `status`='requested' or  `status`='accepted')");
+                 + "from `bookings` where `status`='requested' or  `status`='accepted')");*/
         
            
             while (rs.next()) {
