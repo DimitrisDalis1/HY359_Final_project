@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.google.gson.Gson;
-
-// Import statements...
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,28 +40,19 @@ public class AvailablePetKeepers extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        // Create a list of usernames
         List<String> usernames = keepers.stream()
                 .map(PetKeeper::getUsername)
                 .collect(Collectors.toList());
 
-        // Use Gson to convert the list of usernames to a JSON array
         Gson gson = new Gson();
         String jsonResponse = gson.toJson(usernames);
 
-        // Print the JSON response
         PrintWriter out = response.getWriter();
         out.write(jsonResponse);
         out.close();
     }
 }
 
-
-//for loop string 
-//keepers.get(1).getUsername()
-//trexw guest
-//kanw register neo user
-//jana trexw na dw an emfanizete o neos user.
 
 
 
