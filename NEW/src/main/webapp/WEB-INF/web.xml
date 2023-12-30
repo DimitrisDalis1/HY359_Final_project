@@ -30,6 +30,10 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>servlets.Logout</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>AvailablePetKeepers</servlet-name>
+        <servlet-class>servlets.AvailablePetKeepers</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>LoginPetOwner</servlet-name>
         <servlet-class>servlets.LoginPetOwner</servlet-class>
@@ -114,6 +118,10 @@
         <servlet-name>chatGPTQuestions</servlet-name>
         <url-pattern>/chatGPTQuestions</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AvailablePetKeepers</servlet-name>
+        <url-pattern>/AvailablePetKeepers</url-pattern>
+    </servlet-mapping> 
     <servlet-mapping>
         <servlet-name>Chat</servlet-name>
         <url-pattern>/Chat</url-pattern>
