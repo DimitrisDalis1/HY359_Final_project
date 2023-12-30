@@ -418,6 +418,10 @@ function showPetKeeperMessages(){
     $("#ajaxContent").load("PetKeeperMessages.html"); 
 }
 
+function showGuestForm(){
+    $("#outerContent").load("GuestForm.html");
+}
+
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
