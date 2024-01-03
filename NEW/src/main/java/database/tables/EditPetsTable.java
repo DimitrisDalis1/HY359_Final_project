@@ -22,9 +22,25 @@ import java.util.logging.Logger;
  */
 public class EditPetsTable {
 
-    public void addPetFromJSON(String json) throws ClassNotFoundException {
+    public void addPetFromJSON(String json) throws ClassNotFoundException, SQLException {
         Pet bt = jsonToPet(json);
-        createNewPet(bt);
+        int id = bt.getOwner_id();
+        //If not 0 update
+
+        if (petOfOwner(String.valueOf(id)).getPet_id() != 0) {
+            System.out.println("Is null");
+            updatePetEverything(String.valueOf(bt.getOwner_id()), bt.getName(), bt.getType(), bt.getBreed(), bt.getGender(), bt.getBirthyear(), bt.getWeight(), bt.getDescription(), bt.getPhoto());
+
+        } else {
+            System.out.println("Is NOT null");
+
+            createNewPet(bt);
+
+        }
+
+
+
+        //Logika efw tha kanei update an o owner id uparxei hdh sta pets
     }
 
     public Pet jsonToPet(String json) {
@@ -70,6 +86,8 @@ public class EditPetsTable {
         ResultSet rs;
         try {
             rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
+            System.out.println(rs);
+
            
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
@@ -77,6 +95,7 @@ public class EditPetsTable {
                 pet = gson.fromJson(json, Pet.class);
                
             }
+
             return pet;
         } catch (Exception e) {
             System.err.println("Got an exception! ");
@@ -116,6 +135,54 @@ public class EditPetsTable {
         //stmt.executeUpdate(update);
     }
 
+    public void updatePetEverything(String id, String name, String type, String breed, String gender, int birthyear, double weight, String description, String photo) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        Pet bt = new Pet();
+        if (!name.equals("")) {
+            String update = "UPDATE pets SET name='" + name + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!type.equals("")) {
+
+            String update = "UPDATE pets SET type='" + type + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!breed.equals("")) {
+            String update = "UPDATE pets SET breed='" + breed + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!gender.equals("")) {
+            String update = "UPDATE pets SET gender='" + gender + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (birthyear != 0) {
+            String update = "UPDATE pets SET birthyear='" + birthyear + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (weight != 0) {
+            String update = "UPDATE pets SET weight='" + weight + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!description.equals("")) {
+            String update = "UPDATE pets SET description='" + description + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+        if (!photo.equals("")) {
+            String update = "UPDATE pets SET photo='" + photo + "'" + "WHERE owner_id = '" + id + "'";
+            stmt.executeUpdate(update);
+        }
+
+
+    }
+
     public void deletePet(String id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -130,7 +197,7 @@ public class EditPetsTable {
         Statement stmt = con.createStatement();
         String sql = "CREATE TABLE pets "
                 + "(pet_id VARCHAR(10) not NULL unique, "
-                + "owner_id INTEGER not null,"
+                + "owner_id INTEGER not null ,"
                 + "name VARCHAR(30) not null,"
                 + "type VARCHAR(3)  not null, "
                 + "breed VARCHAR(30)  not null, "

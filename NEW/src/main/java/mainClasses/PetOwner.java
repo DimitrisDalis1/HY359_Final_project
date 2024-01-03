@@ -33,6 +33,10 @@ public class PetOwner {
         return personalpage;
     }
 
+    public int getOwnerId() {
+        return owner_id;
+    }
+
     public String getJob() {
         return job;
     }

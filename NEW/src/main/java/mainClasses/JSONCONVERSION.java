@@ -32,6 +32,14 @@ public class JSONCONVERSION {
         String json = gson.toJson(per, PetOwner.class);
         return json;
     }
+
+    public String PetToJSON(Pet per) {
+        Gson gson = new Gson();
+
+        String json = gson.toJson(per, Pet.class);
+        return json;
+    }
+
     
     public String PetKeeperToJSON(PetKeeper per) {
         Gson gson = new Gson();
