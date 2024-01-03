@@ -30,7 +30,7 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>servlets.Logout</servlet-class>
     </servlet>
-     <servlet>
+    <servlet>
         <servlet-name>AvailablePetKeepers</servlet-name>
         <servlet-class>servlets.AvailablePetKeepers</servlet-class>
     </servlet>
@@ -65,6 +65,14 @@
     <servlet>
         <servlet-name>Chat</servlet-name>
         <servlet-class>servlets.Chat</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>InsertPet</servlet-name>
+        <servlet-class>servlets.InsertPet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPet</servlet-name>
+        <servlet-class>servlets.EditPet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
@@ -121,10 +129,18 @@
     <servlet-mapping>
         <servlet-name>AvailablePetKeepers</servlet-name>
         <url-pattern>/AvailablePetKeepers</url-pattern>
-    </servlet-mapping> 
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Chat</servlet-name>
         <url-pattern>/Chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>InsertPet</servlet-name>
+        <url-pattern>/InsertPet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditPet</servlet-name>
+        <url-pattern>/EditPet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -422,6 +422,13 @@ function showGuestForm(){
     $("#outerContent").load("GuestForm.html");
 }
 
+function showSparkForm(){
+    $("#ajaxContent").load("SparkForm.html");
+}
+
+function showSparkFormEdit(){
+    $("#ajaxContent").load("SparkFormEdit.html");
+}
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
