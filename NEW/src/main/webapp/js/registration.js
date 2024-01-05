@@ -73,7 +73,6 @@ function showLogin() {
 	document.getElementById('registerForm').style.display = "none";
 }
 
-
 function showRegistrationForm() {
     document.getElementById('login-container').style.display = "none";
 	document.getElementById('registerForm').style.display = "flex";
@@ -422,6 +421,10 @@ function showGuestForm(){
     $("#outerContent").load("GuestForm.html");
 }
 
+function showAdminForm(){
+    $("#outerContent").load("adminLogin.html");
+}
+
 function showSparkForm(){
     $("#ajaxContent").load("SparkForm.html");
 }
@@ -429,6 +432,29 @@ function showSparkForm(){
 function showSparkFormEdit(){
     $("#ajaxContent").load("SparkFormEdit.html");
 }
+
+function adminLogin() {
+    var username = document.getElementById("adminUsername").value;
+    var password = document.getElementById("adminPassword").value;
+    var messageContainer = document.getElementById("messageContainer");
+
+    // Assuming your admin credentials are 'admin' and 'admin12*'
+    if (username === "admin" && password === "admin12*") {
+        // Successful login - display success message
+        messageContainer.innerHTML = "<p class='success-message'>Successful admin login!</p>";
+
+        // Redirect to adminPage.html
+        window.location.href = "adminPage.html";
+    } else {
+        // Incorrect credentials - display error message
+        messageContainer.innerHTML = "<p class='error-message'>Incorrect admin credentials. Please try again.</p>";
+    }
+}
+
+function adminLogout() {
+            window.location.href = "index.html";
+        }
+
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
