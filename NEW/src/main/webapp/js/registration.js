@@ -127,12 +127,6 @@ function isLoggedIn() {
 	xhr.send();
 }
 
-$(document).ready(function ()
-{
-
-	isLoggedIn();
-});
-
 function logout(){
 	var xhr = new XMLHttpRequest();
 	xhr.onload = function () {
@@ -453,7 +447,7 @@ function adminLogin() {
 
 function adminLogout() {
             window.location.href = "index.html";
-        }
+}
 
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();

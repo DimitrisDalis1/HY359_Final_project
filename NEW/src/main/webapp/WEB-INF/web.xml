@@ -13,6 +13,10 @@
         <servlet-class>servlets.DeleteDB</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AvailableUsers</servlet-name>
+        <servlet-class>servlets.AvailableUsers</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>registerUser</servlet-name>
         <servlet-class>servlets.registerUser</servlet-class>
     </servlet>
@@ -141,6 +145,10 @@
     <servlet-mapping>
         <servlet-name>EditPet</servlet-name>
         <url-pattern>/EditPet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AvailableUsers</servlet-name>
+        <url-pattern>/AvailableUsers</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

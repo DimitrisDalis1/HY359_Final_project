@@ -12,6 +12,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -134,7 +137,7 @@ public class EditPetOwnersTable {
            PetOwner user = gson.fromJson(json, PetOwner.class);
            return user;
        } catch (Exception e) {
-           System.err.println("Got an exception! ");
+           System.err.println("Got an exception loooool! ");
            System.err.println(e.getMessage());
        }
        return null;
@@ -157,7 +160,37 @@ public class EditPetOwnersTable {
         return null;
     }
 
+     public List<String> databaseToPetOwnersUsernamesAll() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
 
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT username FROM petowners");
+
+            List<String> usernameList = new ArrayList<>();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                usernameList.add(username);
+            }
+
+            return usernameList;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources in the reverse order of their creation to avoid leaks
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+        return Collections.emptyList();
+    }
+    
+    
      public void createPetOwnersTable() throws SQLException, ClassNotFoundException {
 
         Connection con = DB_Connection.getConnection();
@@ -184,6 +217,8 @@ public class EditPetOwnersTable {
         stmt.execute(query);
         stmt.close();
     }
+     
+    
     
     
     /**
