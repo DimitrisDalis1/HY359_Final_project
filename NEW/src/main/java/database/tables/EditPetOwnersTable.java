@@ -190,6 +190,31 @@ public class EditPetOwnersTable {
         return Collections.emptyList();
     }
     
+     
+     public void deletePetOwner(String username) throws SQLException, ClassNotFoundException {
+    Connection con = null;
+    Statement stmt = null;
+
+    try {
+        con = DB_Connection.getConnection();
+        stmt = con.createStatement();
+
+        // Assuming 'petowners' table with a 'username' column
+        String deleteQuery = "DELETE FROM petowners WHERE username='" + username + "'";
+        stmt.executeUpdate(deleteQuery);
+    } finally {
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+}
+
+     
+     
+     
     
      public void createPetOwnersTable() throws SQLException, ClassNotFoundException {
 

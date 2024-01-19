@@ -189,7 +189,7 @@ public class EditPetsTable {
         String deleteQuery = "DELETE FROM pets WHERE pet_id='" + id + "'";
         stmt.executeUpdate(deleteQuery);
         stmt.close();
-        con.close();
+        con.close();    
     }
 
     public void createPetsTable() throws SQLException, ClassNotFoundException {
