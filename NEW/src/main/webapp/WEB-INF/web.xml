@@ -13,6 +13,10 @@
         <servlet-class>servlets.DeleteUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ClientsStats</servlet-name>
+        <servlet-class>servlets.ClientsStats</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteDB</servlet-name>
         <servlet-class>servlets.DeleteDB</servlet-class>
     </servlet>
@@ -75,6 +79,10 @@
         <servlet-class>servlets.Chat</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>PetStatistics</servlet-name>
+        <servlet-class>servlets.PetStatistics</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>InsertPet</servlet-name>
         <servlet-class>servlets.InsertPet</servlet-class>
     </servlet>
@@ -119,6 +127,10 @@
         <url-pattern>/PetOwnerInformation</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>PetStatistics</servlet-name>
+        <url-pattern>/PetStatistics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PetKeeperInformation</servlet-name>
         <url-pattern>/PetKeeperInformation</url-pattern>
     </servlet-mapping>
@@ -141,6 +153,10 @@
     <servlet-mapping>
         <servlet-name>Chat</servlet-name>
         <url-pattern>/Chat</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClientsStats</servlet-name>
+        <url-pattern>/ClientsStats</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InsertPet</servlet-name>

@@ -316,6 +316,34 @@ public class EditPetKeepersTable1 {
     }
 }
     
+     public static int countPetKeepers() throws SQLException, ClassNotFoundException {
+    Connection con = DB_Connection.getConnection();
+    Statement stmt = con.createStatement();
+    ResultSet rs;
+
+    try {
+        rs = stmt.executeQuery("SELECT COUNT(*) AS count FROM petkeepers");
+
+        if (rs.next()) {
+            int count = rs.getInt("count");
+            return count;
+        }
+    } catch (Exception e) {
+        System.err.println("Got an exception! ");
+        System.err.println(e.getMessage());
+    } finally {
+        // Close resources (ResultSet, Statement, Connection)
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (con != null) {
+            con.close();
+        }
+    }
+
+    return 0; // Return 0 if there was an exception or no result
+}
+    
 
      public void createPetKeepersTable() throws SQLException, ClassNotFoundException {
 

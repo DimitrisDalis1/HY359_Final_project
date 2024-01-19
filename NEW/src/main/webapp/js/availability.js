@@ -14,7 +14,6 @@ function formatUsers(data, category, value) {
 }
 
 function showAvailability() {   
-    console.log('Button pressed');
 
     $.ajax({
         url: 'AvailablePetKeepers?type=catKeepers',
