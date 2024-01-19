@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+    <link rel="stylesheet" href="your-merged-styles.css"> <!-- Link to your combined CSS file -->
+    <title>PawsStay Application Menu</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/map.js"></script>
+
+</head>
+
+<body>
+    <div id="outerContent">
+        <!-- Header section -->
+        <header>
+            <h2>PawsStay Application</h2>
+            <h5>PawsStay - Heraklion Crete</h5>
+        </header>
+
+        <!-- Login/Register section --> 
+        <div class="login-register-container">
+            <h2>Sign Up for PawsStay</h2>
+            <p>It's quick and easy.</p>
+
+            <!-- Buttons -->
+            <button type="button" class="btn btn-primary" id="register_pet_owner" onclick="showPetOwnerForm();">Pet Owner</button>
+            <button type="button" class="btn btn-success" id="register_pet_keeper" onclick="showPetKeeperForm();">Pet Keeper</button>
+            <button type="button" class="btn btn-info" id="guest" onclick="showGuestForm();">Guest</button>
+            <button type="button" class="btn btn-primary" id="admin" onclick="showAdminForm();">Admin</button>
+
+            <div id="ajaxContent"></div>
+
+
+            <!-- Shortened consent text -->
+            <p class="small-text">
+                By signing up, you agree to our Terms and Privacy Policy.
+            </p>
+            
+            <!-- Photo placeholder -->
+            <div class="text-center mt-2">
+                <img src="PawsStayLogo.png" alt="PawsStay Logo" class="img-fluid" style="max-width: 150px;">
+            </div>
+        </div>
+
+        <!-- Footer section -->
+        <footer>
+            <p class="small-text">Copyright @ 2023, PawsStay</p>
+        </footer>
+
+    </div>
+
+    <!-- Scripts -->
+
+    <script src="js/registration.js"></script>
+</body>
+
+</html>
