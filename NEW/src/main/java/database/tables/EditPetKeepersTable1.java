@@ -14,8 +14,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.List;
 
 
@@ -193,15 +191,20 @@ public class EditPetKeepersTable1 {
         ResultSet rs = null;
         try {
             //if(type=="catkeeper")
-            if("all".equals(type))     
-            rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE  `petKeepers`.`keeper_id` not in (select keeper_id "
-                 + "from `bookings` where `status`='requested' or  `status`='accepted')\n" +"");
-            /*else if ("catKeepers".equals(type))
+
+
+            if ("all".equals(type)) {
+                rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE  `petKeepers`.`keeper_id` not in (select keeper_id "
+                        + "from `bookings` where `status`='requested' or  `status`='accepted')\n" + "");
+            } else if ("catKeepers".equals(type)) {
+
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`catkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
-                 + "from `bookings` where `status`='requested' or  `status`='accepted')");         
-             else if ("dogKeepers".equals(type))
+                        + "from `bookings` where `status`='requested' or  `status`='accepted')");
+            } else if ("dogKeepers".equals(type)) {
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`dogkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
-                 + "from `bookings` where `status`='requested' or  `status`='accepted')");*/
+                         + "from `bookings` where `status`='requested' or  `status`='accepted')");
+            }
+
         
            
             while (rs.next()) {
@@ -427,7 +430,7 @@ public class EditPetKeepersTable1 {
             stmt.close();
 
         } catch (SQLException ex) {
-            Logger.getLogger(EditPetKeepersTable1.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(EditPetKeepersTable1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -437,11 +440,17 @@ public class EditPetKeepersTable1 {
 
         ResultSet rs;
         try {
+            username = username.substring(1, username.length() - 1);
+            System.out.println("Inside " + username);
+
+
             rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE username = '" + username + "'");
             rs.next();
             String json = DB_Connection.getResultsToJSON(rs);
             Gson gson = new Gson();
             PetKeeper user = gson.fromJson(json, PetKeeper.class);
+            System.out.println("Inside 2nd " + user.getUsername());
+
             return user;
         } catch (Exception e) {
             System.err.println("Got an exception! ");

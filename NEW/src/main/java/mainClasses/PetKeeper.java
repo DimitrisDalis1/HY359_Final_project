@@ -21,7 +21,13 @@ public class PetKeeper {
     String catkeeper,dogkeeper;
     String type;
     int catprice, dogprice;
+    public void setKeeperId(int keeper_id) {
+        this.keeper_id = keeper_id;
+    }
 
+    public int getKeeperId() {
+        return keeper_id;
+    }
     public String getType() {
 		return type;
 	}

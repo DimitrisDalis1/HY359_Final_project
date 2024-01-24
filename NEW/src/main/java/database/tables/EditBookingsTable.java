@@ -23,6 +23,26 @@ public class EditBookingsTable {
 
     public void addBookingFromJSON(String json) throws ClassNotFoundException {
         Booking r = jsonToBooking(json);
+        System.out.println("Add bookings function!");
+        System.out.println(r.getOwner_id());
+        System.out.println(r.getKeeper_id());
+        System.out.println(r.getPet_id());
+
+        createNewBooking(r);
+    }
+
+    public void myAddBookingFromJSON(String json, int a, int b, int c) throws ClassNotFoundException {
+        Booking r = jsonToBooking(json);
+        r.setOwner_id(a);
+        r.setKeeper_id(b);
+        r.setPet_id(c);
+
+
+        System.out.println("Add bookings function!");
+        System.out.println(r.getOwner_id());
+        System.out.println(r.getKeeper_id());
+        System.out.println(r.getPet_id());
+
         createNewBooking(r);
     }
 
@@ -99,6 +119,7 @@ public class EditBookingsTable {
             Connection con = DB_Connection.getConnection();
 
             Statement stmt = con.createStatement();
+
 
             String insertQuery = "INSERT INTO "
                     + " bookings (owner_id,pet_id,keeper_id,fromDate,toDate,status,price)"

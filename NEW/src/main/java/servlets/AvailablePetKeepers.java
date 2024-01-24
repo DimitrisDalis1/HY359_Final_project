@@ -1,8 +1,5 @@
 package servlets;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -13,10 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import database.tables.EditPetKeepersTable1;
 import mainClasses.PetKeeper;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.google.gson.Gson;
 import com.google.gson.Gson;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +25,8 @@ public class AvailablePetKeepers extends HttpServlet {
         EditPetKeepersTable1 available_petKeeper = new EditPetKeepersTable1();
 
         try {
-            keepers = available_petKeeper.getAvailableKeepers("all");
+            System.out.println("askhdbsahdgsauhdbsauhdvsaudybsayugdvsayuvdsvsaudtysvaudy");
+            keepers = available_petKeeper.getAvailableKeepers(type);
         } catch (SQLException ex) {
             Logger.getLogger(AvailablePetKeepers.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
