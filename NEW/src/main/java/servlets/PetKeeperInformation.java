@@ -67,7 +67,7 @@ public class PetKeeperInformation extends HttpServlet {
         HttpSession session = request.getSession();
         EditPetKeepersTable1 pkt = new EditPetKeepersTable1();
         try {
-
+            System.out.println(session.getAttribute("loggedIn").toString());
 
             PetKeeper p = pkt.databaseToPetKeepersOnlyName(session.getAttribute("loggedIn").toString());
             String json = jsc.JavaObjectToJSONRemoveElementsKeeper(p, "lat", "lon");

@@ -9,12 +9,20 @@
         <servlet-class>servlets.InitDB</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>Requests</servlet-name>
+        <servlet-class>servlets.Requests</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteUser</servlet-name>
         <servlet-class>servlets.DeleteUser</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ClientsStats</servlet-name>
         <servlet-class>servlets.ClientsStats</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updateBookingStatus</servlet-name>
+        <servlet-class>servlets.updateBookingStatus</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteDB</servlet-name>
@@ -99,6 +107,10 @@
         <url-pattern>/GetKeeper</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddToBookings</servlet-name>
+        <url-pattern>/AddToBookings</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>InitDB</servlet-name>
         <url-pattern>/InitDB</url-pattern>
     </servlet-mapping>
@@ -171,6 +183,10 @@
         <url-pattern>/EditPet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>Requests</servlet-name>
+        <url-pattern>/Requests</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AvailableUsers</servlet-name>
         <url-pattern>/AvailableUsers</url-pattern>
     </servlet-mapping>
@@ -179,8 +195,8 @@
         <url-pattern>/DeleteUser</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddToBookings</servlet-name>
-        <url-pattern>/AddToBookings</url-pattern>
+        <servlet-name>updateBookingStatus</servlet-name>
+        <url-pattern>/updateBookingStatus</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -14,6 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -86,6 +88,48 @@ public class EditBookingsTable {
         stmt.close();
         con.close();
     }
+    
+    public List<Booking> getAllBookings() throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = null;
+        ResultSet rs = null;
+        List<Booking> bookingsList = new ArrayList<>();
+
+        try {
+            stmt = con.createStatement();
+            String query = "SELECT * FROM bookings";
+            rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBorrowing_id(rs.getInt("booking_id"));
+                booking.setOwner_id(rs.getInt("owner_id"));
+                booking.setPet_id(rs.getInt("pet_id"));
+                booking.setKeeper_id(rs.getInt("keeper_id"));
+                booking.setFromDate(rs.getString("fromdate")); // Assuming "fromdate" is a string; adjust accordingly
+                booking.setToDate(rs.getString("todate"));     // Assuming "todate" is a string; adjust accordingly
+                booking.setStatus(rs.getString("status"));
+                booking.setPrice(rs.getInt("price"));
+
+                bookingsList.add(booking);
+            }
+
+        } finally {
+            // Close resources
+            if (rs != null) {
+                rs.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return bookingsList;
+    }
+    
 
     public void createBookingTable() throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();

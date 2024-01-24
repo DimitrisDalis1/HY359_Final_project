@@ -8,6 +8,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/requests.js"></script>
+        <script src="js/updateBookingStatus.js"></script>
     </head>
     <body>
         <div>TODO write content</div>
@@ -16,9 +18,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit thi
         <input type="button" id="logout_button" onclick="return logout(); return false;" value="Logout">
         <input type="button" id="chat_gpt_button" onclick="return show_chat_gpt_window(); return false;" value="Questions">
         <input type="button" id="load_messages" onclick="return showPetKeeperMessages(); return false;" value="Show Messages">
+        <input type="button" id="show_requests_button" onclick="return showRequests();" value="Show Requests">
 
 
-
+        <div id="requestsContainer"></div>
         <div id="ajaxContent"></div>
+        
+
     </body>
 </html>
