@@ -90,6 +90,10 @@
         <servlet-name>EditPet</servlet-name>
         <servlet-class>servlets.EditPet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToBookings</servlet-name>
+        <servlet-class>servlets.AddToBookings</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GetKeeper</servlet-name>
         <url-pattern>/GetKeeper</url-pattern>
@@ -173,6 +177,10 @@
     <servlet-mapping>
         <servlet-name>DeleteUser</servlet-name>
         <url-pattern>/DeleteUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToBookings</servlet-name>
+        <url-pattern>/AddToBookings</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

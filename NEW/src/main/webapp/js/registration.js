@@ -449,6 +449,11 @@ function adminLogout() {
             window.location.href = "index.html";
 }
 
+
+$(document).ready(function(){
+    isLoggedIn();
+});
+
 /*function showPetOwnerMessages() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
