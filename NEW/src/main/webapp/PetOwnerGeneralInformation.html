@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/bookings.js"></script>
+        <script src="js/availableService.js"></script>
 
 
 
@@ -16,12 +17,14 @@
         <input type="button" id="load_messages" onclick="return showPetOwnerMessages(); return false;" value="Show Messages">
         <button type="button" id="spark" onclick="showSparkForm();">Insert Pet</button>
         <input type="button" id="booking_button" onclick="return showAvailableKeepers(); return false;" value="Show Bookings">
-
-        
-
+        <button type="button" id="petkeepers_button" onclick="showAvailablePetKeepers();">Show Available Pet Keepers</button>
 
 
 
+
+
+
+        <div id="ajaxContent7"></div>
         <div id="ajaxContent"></div>
     </body>
 </html>

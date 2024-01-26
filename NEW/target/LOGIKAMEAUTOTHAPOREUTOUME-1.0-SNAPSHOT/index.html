@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="js/api.js"></script>
     <script src="js/map.js"></script>
+
 </head>
 
 <body>
@@ -21,23 +22,25 @@
             <h5>PawsStay - Heraklion Crete</h5>
         </header>
 
-        <!-- Login/Register section -->
+        <!-- Login/Register section --> 
         <div class="login-register-container">
             <h2>Sign Up for PawsStay</h2>
             <p>It's quick and easy.</p>
 
             <!-- Buttons -->
-            <button type="button" class="btn btn-primary" id="register_pet_owner" onclick="showPetOwnerForm();">Pet Keeper</button>
-            <button type="button" class="btn btn-success" id="register_pet_keeper" onclick="showPetKeeperForm();">Pet Owner</button>
+            <button type="button" class="btn btn-primary" id="register_pet_owner" onclick="showPetOwnerForm();">Pet Owner</button>
+            <button type="button" class="btn btn-success" id="register_pet_keeper" onclick="showPetKeeperForm();">Pet Keeper</button>
             <button type="button" class="btn btn-info" id="guest" onclick="showGuestForm();">Guest</button>
+            <button type="button" class="btn btn-primary" id="admin" onclick="showAdminForm();">Admin</button>
+            <button type="button" class="btn btn-primary" id="register" onclick="showPetKeeperRegistrationForm();">Register now!</button>
+
+            <div id="ajaxContent"></div>
+
 
             <!-- Shortened consent text -->
             <p class="small-text">
-                By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+                By signing up, you agree to our Terms and Privacy Policy.
             </p>
-
-            <!-- Already have an account link -->
-            <p class="already-have-account"><a href="login.html">Already have an account?</a></p>
             
             <!-- Photo placeholder -->
             <div class="text-center mt-2">
@@ -53,8 +56,7 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/password.js"></script>
-    <script src="js/pet.js"></script>
+
     <script src="js/registration.js"></script>
 </body>
 

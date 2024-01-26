@@ -239,8 +239,33 @@ public class EditPetOwnersTable {
 
     return 0; // Return 0 if there was an exception or no result
 }
-     
-     
+
+    public String getPetTypeOfOwner(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT type FROM pets WHERE owner_id = (SELECT owner_id FROM petowners WHERE username = '" + username + "') LIMIT 1");
+
+            if (rs.next()) {
+                return rs.getString("type");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources in the reverse order of their creation to avoid leaks
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return null;
+    }
      
     
      public void createPetOwnersTable() throws SQLException, ClassNotFoundException {

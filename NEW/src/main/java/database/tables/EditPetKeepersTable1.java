@@ -8,10 +8,8 @@ package database.tables;
 import com.google.gson.Gson;
 import mainClasses.PetKeeper;
 import database.DB_Connection;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -196,11 +194,11 @@ public class EditPetKeepersTable1 {
             if ("all".equals(type)) {
                 rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE  `petKeepers`.`keeper_id` not in (select keeper_id "
                         + "from `bookings` where `status`='requested' or  `status`='accepted')\n" + "");
-            } else if ("catKeepers".equals(type)) {
+            } else if ("cat".equals(type)) {
 
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`catkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
                         + "from `bookings` where `status`='requested' or  `status`='accepted')");
-            } else if ("dogKeepers".equals(type)) {
+            } else if ("dog".equals(type)) {
                  rs = stmt.executeQuery("SELECT * FROM `petKeepers` WHERE `petKeepers`.`dogkeeper`='true' AND `petKeepers`.`keeper_id` not in (select keeper_id "
                          + "from `bookings` where `status`='requested' or  `status`='accepted')");
             }
@@ -346,9 +344,8 @@ public class EditPetKeepersTable1 {
 
     return 0; // Return 0 if there was an exception or no result
 }
-    
 
-     public void createPetKeepersTable() throws SQLException, ClassNotFoundException {
+    public void createPetKeepersTable() throws SQLException, ClassNotFoundException {
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();

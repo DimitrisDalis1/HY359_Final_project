@@ -13,6 +13,10 @@
         <servlet-class>servlets.Requests</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>AvailableService</servlet-name>
+        <servlet-class>servlets.AvailableService</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>DeleteUser</servlet-name>
         <servlet-class>servlets.DeleteUser</servlet-class>
     </servlet>
@@ -157,6 +161,10 @@
     <servlet-mapping>
         <servlet-name>UpdatePetKeeperData</servlet-name>
         <url-pattern>/UpdatePetKeeperData</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AvailableService</servlet-name>
+        <url-pattern>/AvailableService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>chatGPTQuestions</servlet-name>

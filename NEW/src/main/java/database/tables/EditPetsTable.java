@@ -79,32 +79,38 @@ public class EditPetsTable {
     }
 
 
-    
+
     public Pet petOfOwner(String id) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
         Pet pet = new Pet();
-        ResultSet rs;
-        try {
-            rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
-            System.out.println(rs);
 
-           
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM pets WHERE owner_id= '" + id + "'");
+
             while (rs.next()) {
                 String json = DB_Connection.getResultsToJSON(rs);
                 Gson gson = new Gson();
                 pet = gson.fromJson(json, Pet.class);
-               
             }
 
             return pet;
         } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
+        } finally {
+            // Close resources (ResultSet, Statement, Connection)
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
         }
         return null;
     }
-    
+
+
     public ArrayList<Pet> databaseToPets(String type) throws SQLException, ClassNotFoundException {
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();
@@ -219,6 +225,33 @@ public class EditPetsTable {
         stmt.executeUpdate(deleteQuery);
         stmt.close();
         con.close();    
+    }
+
+    public String findPetTypeByUsername(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs;
+
+        try {
+            rs = stmt.executeQuery("SELECT p.type FROM pets p INNER JOIN petowners po ON p.owner_id = po.owner_id WHERE po.username = '" + username + "'");
+
+            if (rs.next()) {
+                return rs.getString("type");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources (ResultSet, Statement, Connection)
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return null; // Return null if there was an exception or no result
     }
 
     public void createPetsTable() throws SQLException, ClassNotFoundException {
