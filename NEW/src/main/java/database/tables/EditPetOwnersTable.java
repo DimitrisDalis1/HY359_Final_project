@@ -212,6 +212,49 @@ public class EditPetOwnersTable {
     }
 }
 
+    public void deleteBookingsForPetOwner(int ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.createStatement();
+
+            // Assuming 'bookings' table with an 'owner_id' column
+            String deleteQuery = "DELETE FROM bookings WHERE owner_id=" + ownerId;
+            stmt.executeUpdate(deleteQuery);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+    public void     deletePetsForPetOwner(int ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.createStatement();
+
+            // Assuming 'pets' table with an 'owner_id' column
+            String deleteQuery = "DELETE FROM pets WHERE owner_id=" + ownerId;
+            stmt.executeUpdate(deleteQuery);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+
     public static int countPetOwners() throws SQLException, ClassNotFoundException {
     Connection con = DB_Connection.getConnection();
     Statement stmt = con.createStatement();
@@ -266,9 +309,36 @@ public class EditPetOwnersTable {
 
         return null;
     }
-     
-    
-     public void createPetOwnersTable() throws SQLException, ClassNotFoundException {
+
+    public int getOwnerIdByUsername(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT owner_id FROM petowners WHERE username = '" + username + "'");
+            if (rs.next()) {
+                return rs.getInt("owner_id");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources in the reverse order of their creation to avoid leaks
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return -1; // Return -1 if no matching owner_id found
+    }
+
+
+
+    public void createPetOwnersTable() throws SQLException, ClassNotFoundException {
 
         Connection con = DB_Connection.getConnection();
         Statement stmt = con.createStatement();

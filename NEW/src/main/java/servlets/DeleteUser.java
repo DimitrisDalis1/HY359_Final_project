@@ -33,16 +33,32 @@ public class DeleteUser extends HttpServlet {
 
             // Check if the instances are not null before calling methods
             if (editPetKeepersTable1 != null) {
+                int keeperIdByUsername = editPetKeepersTable1.getKeeperIdByUsername(usernameToDelete);
+
+                // Delete keeper's bookings/messages based on keeper_id
+                editPetKeepersTable1.deleteBookingsForPetKeeper(keeperIdByUsername);
+
+                // Delete the user
                 editPetKeepersTable1.deletePetKeeper(usernameToDelete);
             }
+
             if (editPetOwnersTable != null) {
+                int ownerIdToDelete = editPetOwnersTable.getOwnerIdByUsername(usernameToDelete);
+
+                // Delete pet owner's bookings based on owner_id
+                editPetOwnersTable.deleteBookingsForPetOwner(ownerIdToDelete);
+
+                // Delete pet owner's pets based on owner_id
+                editPetOwnersTable.deletePetsForPetOwner(ownerIdToDelete);
+
+                // Delete the user
                 editPetOwnersTable.deletePetOwner(usernameToDelete);
             }
-            
+
             response.setContentType("text/plain");
             response.getWriter().write(usernameToDelete + " deleted successfully");
         } catch (SQLException | ClassNotFoundException e) {
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting user");
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting user: " + e.getMessage());
             e.printStackTrace(); // Log the exception for debugging
         }
     }

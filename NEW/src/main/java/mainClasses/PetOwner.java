@@ -21,7 +21,7 @@ public class PetOwner {
     String personalpage;
     String type;
 
-    public String getType() {
+    public String   getType() {
 		return type;
 	}
 

@@ -316,8 +316,30 @@ public class EditPetKeepersTable1 {
         }
     }
 }
-    
-     public static int countPetKeepers() throws SQLException, ClassNotFoundException {
+
+    public void deleteBookingsForPetOwner(int ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.createStatement();
+
+            // Assuming 'bookings' table with an 'owner_id' column
+            String deleteQuery = "DELETE FROM bookings WHERE owner_id=" + ownerId;
+            stmt.executeUpdate(deleteQuery);
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+
+    public static int countPetKeepers() throws SQLException, ClassNotFoundException {
     Connection con = DB_Connection.getConnection();
     Statement stmt = con.createStatement();
     ResultSet rs;
@@ -344,6 +366,61 @@ public class EditPetKeepersTable1 {
 
     return 0; // Return 0 if there was an exception or no result
 }
+
+    public int getKeeperIdByUsername(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            rs = stmt.executeQuery("SELECT keeper_id FROM petkeepers WHERE username = '" + username + "'");
+            if (rs.next()) {
+                return rs.getInt("keeper_id");
+            }
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources in the reverse order of their creation to avoid leaks
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return -1; // Return -1 if no matching keeper_id found
+    }
+
+    public void deleteBookingsForPetKeeper(int keeperId) throws SQLException, ClassNotFoundException {
+        Connection con = null;
+        Statement stmt = null;
+
+        try {
+            con = DB_Connection.getConnection();
+            stmt = con.createStatement();
+
+            // Delete messages associated with the bookings
+            String deleteMessagesQuery = "DELETE FROM messages WHERE booking_id IN (SELECT booking_id FROM bookings WHERE keeper_id=" + keeperId + ")";
+            stmt.executeUpdate(deleteMessagesQuery);
+
+            // Delete bookings for the specified keeper_id
+            String deleteBookingsQuery = "DELETE FROM bookings WHERE keeper_id=" + keeperId;
+            stmt.executeUpdate(deleteBookingsQuery);
+
+        } finally {
+            // Close resources in the reverse order of their creation to avoid leaks
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+    }
+
+
 
     public void createPetKeepersTable() throws SQLException, ClassNotFoundException {
 
