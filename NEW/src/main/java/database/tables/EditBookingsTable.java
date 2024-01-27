@@ -67,6 +67,36 @@ public class EditBookingsTable {
         return null;
     }
 
+
+    public ArrayList<Integer> getFinishedBookingIdsForOwner(String ownerId) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+        ArrayList<Integer> finishedBookingIds = new ArrayList<>();
+
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT booking_id FROM bookings WHERE owner_id='" + ownerId + "' AND status='finished'");
+            while (rs.next()) {
+                int bookingId = rs.getInt("booking_id");
+                finishedBookingIds.add(bookingId);
+            }
+
+            return finishedBookingIds;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        } finally {
+            // Close resources
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        return null;
+    }
+
     public Booking jsonToBooking(String json) {
         Gson gson = new Gson();
         Booking r = gson.fromJson(json, Booking.class);
@@ -151,6 +181,54 @@ public class EditBookingsTable {
         stmt.close();
         con.close();
 
+    }
+
+
+    public int getOwnerIDFromBookingID(int bookingID) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT owner_id FROM bookings WHERE booking_id='" + bookingID + "'");
+            if (rs.next()) {
+                return rs.getInt("owner_id");
+            }
+        } finally {
+            // Close resources
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        // Return -1 or throw an exception based on your error handling logic
+        return -1;
+    }
+
+
+    public int getKeeperIDFromBookingID(int bookingID) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        try {
+            ResultSet rs = stmt.executeQuery("SELECT keeper_id FROM bookings WHERE booking_id='" + bookingID + "'");
+            if (rs.next()) {
+                return rs.getInt("keeper_id");
+            }
+        } finally {
+            // Close resources
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (con != null) {
+                con.close();
+            }
+        }
+
+        // Return -1 or throw an exception based on your error handling logic
+        return -1;
     }
 
     /**

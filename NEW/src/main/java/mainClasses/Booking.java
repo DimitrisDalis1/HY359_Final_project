@@ -6,16 +6,22 @@
 
 package mainClasses;
 
+import com.google.gson.Gson;
+
 /**
  *
  * @author Mike
  */
 public class Booking {
-    int borrowing_id,owner_id,pet_id,keeper_id;
+    int borrowing_id,owner_id,pet_id,keeper_id,bookingId;
     String fromDate,toDate,status;
     int price;
     public int getBorrowing_id() {
         return borrowing_id;
+    }
+
+    public int getBookingId() {
+        return bookingId;
     }
 
     public void setBorrowing_id(int borrowing_id) {
@@ -80,6 +86,4 @@ public class Booking {
     }
 
 
-  
-    
 }

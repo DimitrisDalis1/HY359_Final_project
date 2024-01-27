@@ -13,6 +13,10 @@
         <servlet-class>servlets.Requests</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ShowFinishedBookings</servlet-name>
+        <servlet-class>servlets.ShowFinishedBookings</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AvailableService</servlet-name>
         <servlet-class>servlets.AvailableService</servlet-class>
     </servlet>
@@ -35,6 +39,10 @@
     <servlet>
         <servlet-name>AvailableUsers</servlet-name>
         <servlet-class>servlets.AvailableUsers</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddToReviews</servlet-name>
+        <servlet-class>servlets.AddToReviews</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>registerUser</servlet-name>
@@ -151,8 +159,16 @@
         <url-pattern>/PetStatistics</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddToReviews</servlet-name>
+        <url-pattern>/AddToReviews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>PetKeeperInformation</servlet-name>
         <url-pattern>/PetKeeperInformation</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowFinishedBookings</servlet-name>
+        <url-pattern>/ShowFinishedBookings</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdatePetOwnerData</servlet-name>

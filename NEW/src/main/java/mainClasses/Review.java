@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package mainClasses;
 
-/**
- *
- * @author micha
- */
 public class Review {
 
-    int review_id,owner_id,keeper_id;
-    String reviewText,reviewScore;
+    int review_id, owner_id, keeper_id, bookingId; // Add bookingId field
+
+    String reviewText, reviewScore;
 
     public int getReview_id() {
         return review_id;
@@ -38,7 +30,14 @@ public class Review {
         this.keeper_id = keeper_id;
     }
 
-  
+    public int getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
+
     public String getReviewText() {
         return reviewText;
     }
@@ -54,5 +53,5 @@ public class Review {
     public void setReviewScore(String reviewScore) {
         this.reviewScore = reviewScore;
     }
-
 }
+
