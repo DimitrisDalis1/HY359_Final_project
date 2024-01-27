@@ -162,6 +162,42 @@
         <servlet-name>AddToReviews</servlet-name>
         <url-pattern>/AddToReviews</url-pattern>
     </servlet-mapping>
+
+    Certainly! Below is a simple example of a Java servlet named ShowMyBooking. This example assumes you are using Java Servlet API 3.0 or later. If you haven't set up a Java web project or servlet container, you'll need to do so first.
+
+    Create a new Java class for your servlet, for example, ShowMyBookingServlet.java:
+    java
+    Copy code
+    import java.io.IOException;
+    import javax.servlet.ServletException;
+    import javax.servlet.annotation.WebServlet;
+    import javax.servlet.http.HttpServlet;
+    import javax.servlet.http.HttpServletRequest;
+    import javax.servlet.http.HttpServletResponse;
+
+    @WebServlet("/ShowMyBooking")
+    public class ShowMyBookingServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+    // Your logic to fetch booking data goes here
+    // For demonstration purposes, let's send a simple JSON response
+    String jsonResponse = "{\"bookingId\": 123, \"bookingName\": \"Sample Booking\"}";
+
+    // Set content type and send the response
+    response.setContentType("application/json");
+    response.setCharacterEncoding("UTF-8");
+    response.getWriter().write(jsonResponse);
+    }
+    }
+    Make sure to configure your web.xml or use annotations for servlet registration. If using annotations, the @WebServlet annotation above should be enough. If using web.xml, you would need to add an entry like this:
+    xml
+    Copy code
+    <servlet>
+        <servlet-name>ShowMyBooking</servlet-name>
+        <servlet-class>servlets.ShowMyBooking</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PetKeeperInformation</servlet-name>
         <url-pattern>/PetKeeperInformation</url-pattern>
@@ -209,6 +245,10 @@
     <servlet-mapping>
         <servlet-name>Requests</servlet-name>
         <url-pattern>/Requests</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowMyBooking</servlet-name>
+        <url-pattern>/ShowMyBooking</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AvailableUsers</servlet-name>

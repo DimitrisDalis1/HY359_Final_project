@@ -128,14 +128,16 @@ public class AddToBookings extends HttpServlet {
 
         try {
             p = pot.databaseToPetOwnersOnlyName(session.getAttribute("loggedIn").toString());
-            pk = epkt.databaseToPetKeepersOnlyName(username);
+            pk = epkt.databaseToPetKeepersOnlyName2(username);
             pt = ept.petOfOwner(Integer.toString(p.getOwnerId()));
 
             Booking b = new Booking();
 
 
             ebt.myAddBookingFromJSON(finalInput, p.getOwnerId(), pk.getKeeperId(), pt.getPet_id());
-
+            PrintWriter out = response.getWriter();
+            out.println("Request sent.");
+            out.flush();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AddToBookings.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

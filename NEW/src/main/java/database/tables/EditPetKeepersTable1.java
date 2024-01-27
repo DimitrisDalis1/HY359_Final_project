@@ -454,9 +454,31 @@ public class EditPetKeepersTable1 {
         stmt.execute(query);
         stmt.close();
     }
-     
-   
-    
+
+
+    public PetKeeper databaseToPetKeepersOnlyName2(String username) throws SQLException, ClassNotFoundException {
+        Connection con = DB_Connection.getConnection();
+        Statement stmt = con.createStatement();
+
+        ResultSet rs;
+        try {
+            username = username.substring(1, username.length() - 1);
+            System.out.println("Inside " + username);
+
+            rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE username = '" + username + "'");
+            rs.next();
+            String json = DB_Connection.getResultsToJSON(rs);
+            Gson gson = new Gson();
+            PetKeeper user = gson.fromJson(json, PetKeeper.class);
+            System.out.println("Inside 2nd " + user.getUsername());
+
+            return user;
+        } catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
     
     /**
      * Establish a database connection and add in the database.
@@ -514,8 +536,6 @@ public class EditPetKeepersTable1 {
 
         ResultSet rs;
         try {
-            username = username.substring(1, username.length() - 1);
-            System.out.println("Inside " + username);
 
 
             rs = stmt.executeQuery("SELECT * FROM petkeepers WHERE username = '" + username + "'");
@@ -523,7 +543,7 @@ public class EditPetKeepersTable1 {
             String json = DB_Connection.getResultsToJSON(rs);
             Gson gson = new Gson();
             PetKeeper user = gson.fromJson(json, PetKeeper.class);
-            System.out.println("Inside 2nd " + user.getUsername());
+
 
             return user;
         } catch (Exception e) {

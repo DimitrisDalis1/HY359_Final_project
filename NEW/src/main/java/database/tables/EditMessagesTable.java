@@ -11,6 +11,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mainClasses.Message;
 
+import javax.sound.midi.SysexMessage;
+
 public class EditMessagesTable {
 
     public void addMessageFromJSON(String json) throws ClassNotFoundException {
@@ -77,14 +79,37 @@ public class EditMessagesTable {
         try {
             Connection con = DB_Connection.getConnection();
             Statement stmt = con.createStatement();
-
+            System.out.println(msg.getBooking_id());
             String insertQuery = "INSERT INTO "
                     + " messages (booking_id,message,sender,datetime) "
                     + " VALUES ("
-                    + "'" + "1" + "',"
+                    + "'" + msg.getBooking_id() + "',"
                     + "'" + msg.getMessage() + "',"
                     + "'" + msg.getSender() + "',"
                     + "'" + msg.getDatetime() + "'"
+                    + ")";
+            System.out.println(insertQuery);
+            stmt.executeUpdate(insertQuery);
+            System.out.println("# The message was successfully added in the database.");
+
+            stmt.close();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(EditMessagesTable.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void createNewMessageWithVariables(int booking_id, String message, String sender, String datetime) throws ClassNotFoundException {
+        try {
+            Connection con = DB_Connection.getConnection();
+            Statement stmt = con.createStatement();
+            String insertQuery = "INSERT INTO "
+                    + " messages (booking_id,message,sender,datetime) "
+                    + " VALUES ("
+                    + "'" + booking_id + "',"
+                    + "'" + message + "',"
+                    + "'" + sender + "',"
+                    + "'" + datetime + "'"
                     + ")";
             System.out.println(insertQuery);
             stmt.executeUpdate(insertQuery);

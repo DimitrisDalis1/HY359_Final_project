@@ -23,6 +23,9 @@ public class Booking {
     public int getBookingId() {
         return bookingId;
     }
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
+    }
 
     public void setBorrowing_id(int borrowing_id) {
         this.borrowing_id = borrowing_id;

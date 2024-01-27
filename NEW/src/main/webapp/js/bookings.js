@@ -20,8 +20,6 @@ function AvailableKeepers() {
 
 
 
-
-
                 $('#ajaxContent').append(createTableFromJSON(responseData));
             } else {
                 $('#ajaxContent').html("<p>No available pet keepers found.</p>");
@@ -64,7 +62,7 @@ function sendRequest(){
     xhr.open('POST', 'AddToBookings');
     xhr.setRequestHeader("Content-type", "application/json");
     xhr.send(jsonData);
-    
+
    /*
    var name = $("#username").val();
     
@@ -95,3 +93,49 @@ function sendRequest(){
     });*/
 }
 
+// script.js
+
+function ShowMyBooking() {
+    // Make an AJAX call to the servlet
+    $.ajax({
+        url: 'ShowMyBooking',
+        type: 'GET',
+        dataType: 'json',
+        success: function(responseData) {
+            // Check if the responseData is an array and not empty
+            if (Array.isArray(responseData) && responseData.length > 0) {
+                $('#extra_field').html("<h1>Available Bookings</h1>");
+
+                // Create a table header
+                var table = '<table border="1"><tr><th>Booking ID</th><th>Owner ID</th><th>Pet ID</th><th>Keeper ID</th><th>Status</th><th>Price</th></tr>';
+
+// Loop through each object in the array and create a table row
+                for (var i = 0; i < responseData.length; i++) {
+                    table += '<tr>';
+                    table += '<td>' + responseData[i].bookingId + '</td>';
+                    table += '<td>' + responseData[i].owner_id + '</td>';
+                    table += '<td>' + responseData[i].pet_id + '</td>';
+                    table += '<td>' + responseData[i].keeper_id + '</td>';
+                    table += '<td>' + responseData[i].status + '</td>';
+                    table += '<td>' + responseData[i].price + '</td>';
+                    table += '</tr>';
+                }
+// Close the table tag
+                table += '</table>';
+
+                // Append the table to the HTML element with id 'extra_field'
+                $('#extra_field').append(table);
+            } else {
+                // Display a message when no bookings are found
+                $('#extra_field').html("<p>No available Bookings found.</p>");
+            }
+        },
+        error: function(xhr, status, error) {
+            // Handle errors, if any
+            console.error('Error:', error);
+
+            // Display an error message to the user
+            $('#extra_field').html("<p>No available Bookings found.</p>");
+        }
+    });
+}

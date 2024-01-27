@@ -6,7 +6,7 @@ function showRequests() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var bookings = JSON.parse(xhr.responseText);
-                var requestsContainer = document.getElementById("requestsContainer");
+                var requestsContainer = document.getElementById("ajaxContent");
                 requestsContainer.innerHTML = "<h2>All Bookings</h2>";
 
                 if (bookings.length > 0) {

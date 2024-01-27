@@ -5,6 +5,7 @@
  */
 package servlets;
 
+import database.tables.EditBookingsTable;
 import database.tables.EditMessagesTable;
 import database.tables.EditPetKeepersTable1;
 import database.tables.EditPetOwnersTable;
@@ -59,8 +60,26 @@ public class Chat extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         EditMessagesTable emt = new EditMessagesTable();
+
+        HttpSession session = request.getSession();
+        EditPetKeepersTable1 pkt = new EditPetKeepersTable1();
+        EditPetOwnersTable pot = new EditPetOwnersTable();
+        EditBookingsTable bookingsTable = new EditBookingsTable();
+        PetOwner o = new PetOwner();
+        PetKeeper k = new PetKeeper();
+        int booking_id = 0;
+        String username = (String) request.getSession().getAttribute("loggedIn");
         try {
-            newmes = emt.databaseToMessage(1);
+            o = pot.databaseToPetOwnersWithUsernameOnly(username);
+            if (o == null) {
+                k = pkt.databaseToPetKeepersUsernameOnly(username);
+                System.out.println("KEEPERID: " + k.getKeeperId());
+                booking_id = bookingsTable.getBookingIDFromKeeperID(k.getKeeperId());
+            } else {
+                o = pot.databaseToPetOwnersWithUsernameOnly(username);
+                booking_id = bookingsTable.getBookingIDFromOwnerID(o.getOwnerId());
+            }
+            newmes = emt.databaseToMessage(booking_id);
             //System.out.println(newmes.get(0).getMessage());
         } catch (SQLException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
@@ -98,8 +117,6 @@ public class Chat extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Message msg = new Message();
 
-
-
         EditMessagesTable emt = new EditMessagesTable();
         JSONCONVERSION jc = new JSONCONVERSION();
         BufferedReader inputJSONfromClient = request.getReader();
@@ -107,17 +124,28 @@ public class Chat extends HttpServlet {
         System.out.println("Final input: " + finalInput);
         msg = emt.jsonToMessage(finalInput);
 
+        PetOwner o = new PetOwner();
+        PetKeeper k = new PetKeeper();
+
         HttpSession session = request.getSession();
         EditPetKeepersTable1 pkt = new EditPetKeepersTable1();
         EditPetOwnersTable pot = new EditPetOwnersTable();
+        EditBookingsTable bookingsTable = new EditBookingsTable();
+        int booking_id = 0;
+        String username = (String) request.getSession().getAttribute("loggedIn");
         try {
-            PetOwner p = pot.databaseToPetOwnersOnlyName(session.getAttribute("loggedIn").toString());
-            if (p == null) {
-                PetKeeper pk = pkt.databaseToPetKeepersOnlyName(session.getAttribute("loggedIn").toString());
-                msg.setSender(pk.getUsername());
+            o = pot.databaseToPetOwnersWithUsernameOnly(username);
+            if (o == null) {
+                k = pkt.databaseToPetKeepersUsernameOnly(username);
+                msg.setSender(k.getUsername());
+                booking_id = bookingsTable.getBookingIDFromKeeperID(k.getKeeperId());
             } else {
-                msg.setSender(p.getUsername());
+                o = pot.databaseToPetOwnersWithUsernameOnly(username);
+                msg.setSender(o.getUsername());
+                booking_id = bookingsTable.getBookingIDFromOwnerID(o.getOwnerId());
             }
+            msg.setBooking_id(booking_id);
+            System.out.println("BookingID: " + booking_id);
             System.out.println("Sender: " + msg.getSender());
 
         } catch (SQLException ex) {
@@ -125,7 +153,6 @@ public class Chat extends HttpServlet {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Chat.class.getName()).log(Level.SEVERE, null, ex);
         }
-
 
         try {
             emt.createNewMessage(msg);
@@ -138,17 +165,7 @@ public class Chat extends HttpServlet {
             String newMessage = "<p>" + msg.getSender() + ":" + msg.getMessage() + "</p>";
             //message.add(newMessage);
             //out.print(newMessage);
+
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

@@ -14,7 +14,7 @@ function addPet() {
     var xhr = new XMLHttpRequest();
     xhr.onload = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-           document.getElementById('ajaxContent').innerHTML=JSON.stringify(xhr.responseText);
+           document.getElementById('ajaxContent').innerHTML="Pet inserted.";
                       //document.getElementById('ajaxContent').innerHTML="<br>HEY</br>";
 
             
