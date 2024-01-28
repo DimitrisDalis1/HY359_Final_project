@@ -251,7 +251,9 @@ public class EditBookingsTable {
 
         try {
             ResultSet rs = stmt.executeQuery("SELECT booking_id FROM bookings WHERE owner_id='" + ownerid + "'");
-            return rs.getInt("booking_id");
+            if (rs.next()) {
+                return rs.getInt("booking_id");
+            }
         } finally {
             // Close resources
             if (stmt != null) {
@@ -263,6 +265,7 @@ public class EditBookingsTable {
         }
 
         // Return -1 or throw an exception based on your error handling logic
+        return -1;
     }
 
     public int getBookingIDFromKeeperID(int keeperID) throws SQLException, ClassNotFoundException {

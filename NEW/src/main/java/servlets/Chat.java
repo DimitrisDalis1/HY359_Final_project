@@ -139,12 +139,10 @@ public class Chat extends HttpServlet {
                 k = pkt.databaseToPetKeepersUsernameOnly(username);
                 msg.setSender(k.getUsername());
                 booking_id = bookingsTable.getBookingIDFromKeeperID(k.getKeeperId());
-                System.out.println("BookingID1 " + booking_id);
             } else {
                 o = pot.databaseToPetOwnersWithUsernameOnly(username);
                 msg.setSender(o.getUsername());
                 booking_id = bookingsTable.getBookingIDFromOwnerID(o.getOwnerId());
-                System.out.println("BookingID2: " + booking_id);
             }
             msg.setBooking_id(booking_id);
             System.out.println("BookingID: " + booking_id);
