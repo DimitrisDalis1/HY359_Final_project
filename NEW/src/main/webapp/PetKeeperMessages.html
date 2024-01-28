@@ -9,20 +9,20 @@
 
     </head>
     <body>
-        <h1>A PetKeeper CHAT Using AJAX</h1>
+        <h1> PetKeeper's Chat Room</h1>
         <div>
         <form id="myForm" onsubmit='sendChatAJAX(); return false;'>
             <label hidden for='datetime'>Recipient:</label>
             <input hidden id='datetime' type='text' name='datetime' value=''><br><br>
 
-            <label for='message'>Message:</label>
+            <label for='message'></label>
             <textarea id='message' name='message' rows="5"></textarea> <br>
 
             <input type='submit'><br>
         </form>
         </div>
         <div id="ajaxContent">
-            <h2>Messages</h2>
+            <h2>Messages:</h2>
             <div id="ajaxContent1"></div>
 
         </div>

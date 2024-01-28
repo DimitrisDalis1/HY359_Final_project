@@ -4,24 +4,31 @@
     <title>PawsStay Application</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="CSS/AdminPage.css">
 </head>
 <body>
-    
-    <body>
-        <input type="button" id="logout_button" onclick="return adminLogout(); return false;" value="Logout">
-        <input type="button" id="showUsers" onclick="showUsers();" value="Show users">
-        <input type="button" id="showPetChart" onclick="PetStats();" value="Show Pet Statistics">
-        <input type="button" id="showClientChart" onclick="ClientStats();" value="Show Clients Statistics">
-        
-        <div id="chartContainer"></div>
-        <div id="chartContainerOwnersAndKeepers"></div>
-        <div id="showUsers"></div>
-        <div id="outerContent"></div>
-       
-        <script src="js/charts.js"></script>
-        <script src="js/registration.js"></script>
-        <script src="js/availability.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://www.gstatic.com/charts/loader.js"></script>
+<header class="header">
+    <h1>PawsStay Dashboard</h1>
+    <h3>PawsStay - Heraklion Crete</h3>
+    <div class="header-buttons">
+        <button class="header-button" onclick="return adminLogout();">Logout</button>
+        <button class="header-button" onclick="showUsers();">Show Users</button>
+        <button class="header-button" onclick="PetStats();">Show Pet Statistics</button>
+        <button class="header-button" onclick="ClientStats();">Show Clients Statistics</button>
+    </div>
+</header>
+
+<div class="content-container">
+    <div id="chartContainer"></div>
+    <div id="chartContainerOwnersAndKeepers"></div>
+    <div id="showUsers"></div>
+    <div id="outerContent"></div>
+</div>
+
+<script src="js/charts.js"></script>
+<script src="js/registration.js"></script>
+<script src="js/availability.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 </body>
 </html>

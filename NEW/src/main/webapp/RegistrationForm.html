@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-
-
-
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script src="js/password.js"></script>
     <script src="js/pet.js"></script>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-
+    <link rel="stylesheet" type="text/css" href="CSS/Registration.css">
 </head>
 <body >
-    <header class="bg-info text-white text-center py-4">
-        <div class="container">
-            <h1>PawsStay Application</h1>
-            <h5>PawsStay - Heraklion Crete</h5>
-        </div>
-    </header>
+<header style="background-color: #0e1013; color: #fff;" class="text-center py-4">
+    <div class="container">
+        <h1>Pet Pawstay Registration</h1>
+        <h5>PawsStay - Heraklion Crete</h5>
+    </div>
+</header>
 <input type="button" id="go_home" onclick="return showHomePage(); return false;" value="Home Page">
 
 <h3>Contact Form</h3>
@@ -171,7 +167,7 @@
                             <small class="form-text text-muted">From 10 to 150 characters (can be broken into more pieces, name, number, etc.).</small>
                         </div>
                         <div class="form-group">
-                            <div id="Map" style="height:600px; width:700px"></div>
+                            <div id="Map" style="height:600px; width:535px"></div>
                             <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
                         </div>
 
@@ -192,8 +188,6 @@
                             <input type="tel" id="telephone" name="telephone" class="form-control" pattern="\d{10,14}"
                                 required>
                             <small class="form-text text-muted">10-14 digits.</small>
-                            <input type="text" id="lon" class="form-control" >
-                            <input type="text" id="lat"  class="form-control" >
                         </div>
 
                         <div class="form-group form-check">
@@ -206,14 +200,6 @@
 
                         <div class="text-center">
                             <button id="submitButton" type="submit" class="btn btn-primary">Register</button>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="col-md">
-                            <figure>
-                                <img src="Hospitality-Pet-Care.jpg" class="img-fluid mx-auto" alt="CSD" width="100" height="100">
-                                <figcaption>@PSA</figcaption>
-                            </figure>
                         </div>
                 </form>
             </div>
