@@ -168,8 +168,8 @@ function showPetOwnerRegistrationForm(){
 }
 
 
-function RegistrationForm(){
-    $("#outerContent").load("RegistrationForm.html", function (){
+function showPetKeeperRegistrationForm(){
+    $("#outerContent").load("PetKeeperRegistrationForm.html", function (){
            setTimeout(function() { initializeMap(); }, 3000);
     });
 }

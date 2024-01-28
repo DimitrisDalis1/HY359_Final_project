@@ -63,7 +63,7 @@ function showReviewForm() {
 
     formHtml += '</select>';
     formHtml += '<br>';
-    formHtml += '<label for="reviewText"></label>';
+    formHtml += '<label for="reviewText">Review:</label>';
     formHtml += '<textarea id="reviewText" rows="4" cols="50"></textarea>';
     formHtml += '<br>';
     formHtml += '<button type="button" onclick="submitReviewData()">Submit Review</button>';

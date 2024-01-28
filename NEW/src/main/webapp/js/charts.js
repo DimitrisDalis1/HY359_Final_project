@@ -29,7 +29,7 @@ function drawPetChart(data) {
             pieHole: 0.4,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('outerContent'));
+        var chart = new google.visualization.PieChart(document.getElementById('chartContainer'));
         chart.draw(dataTable, options);
     });
 }
@@ -63,7 +63,7 @@ function drawPetOwnersAndKeepersChart(data) {
             pieHole: 0.4,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('outerContent'));
+        var chart = new google.visualization.PieChart(document.getElementById('chartContainerOwnersAndKeepers'));
         chart.draw(dataTable, options);
     });
 }
